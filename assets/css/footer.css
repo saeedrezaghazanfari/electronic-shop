@@ -1,0 +1,64 @@
+/* CSS3 Cdoes */
+
+.bg-blue{
+    background-color: #043353;
+}
+.radius{
+    border-radius: 15px;
+}
+.text-blue{
+    color: #043353;
+}
+.uppersection{
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    padding: 2px;
+    z-index: 30;
+}
+.ulInFooter{
+    list-style: none;
+    line-height: 30px;
+}
+.ulInFooter li a{
+    text-decoration: none;
+    color: #E4DFCF;
+}
+.ulInFooter li:hover a{
+    transition: all 0.3s;
+    padding-right: 12px;
+    font-weight: 900;
+    border-right: 2px solid #0e93ec;
+}
+.ulInFooter li:not(:hover) a{
+    transition: all 0.3s;
+}
+.footerColor{
+    background-color: rgb(2, 14, 48);
+}
+.aInFooter{
+    color: #0e93ec;
+}
+.aInFooter:hover{
+    text-decoration: none;
+    font-weight: 900 !important;
+}
+.messagesClass{
+    position: fixed;
+    bottom: 70px;
+    left: 30px;
+    padding: 10px;
+    z-index: 35;
+}
+.green{
+    color: rgb(0, 255, 0) !important;
+    font-weight: 900;
+}
+.yellow{
+    color: rgb(235, 255, 56) !important;
+    font-weight: 900;
+}
+.red{
+    color: red !important;
+    font-weight: 900;
+}

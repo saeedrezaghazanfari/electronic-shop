@@ -1,0 +1,13 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <div class="container bg-light-opacity p-3 mt-5 radius text-center bg404">
+        <br><br><br><br><br>
+        <h5 class="wow animate__animated animate__fadeInUp" data-wow-delay="1s"><b> صفحه ی مورد نظر شما پیدا نشد!!</b></h5>
+        <h6 class="wow animate__animated animate__fadeInUp" data-wow-delay="3s"><b> دوباره تلاش کنید...</b></h6>
+        <span class="wow animate__animated animate__fadeInUp" data-wow-delay="2s">اتصال اینترنت خود را مطمئن شوید<img src="{% static 'img/tik.PNG' %}" class="tikmultisize" alt="404 Not Found"> URL وارد شده را چک کنید<img src="{% static 'img/tik.PNG' %}" class="tikmultisize" alt="404 not found"></span>
+    </div>
+    <br><br>
+{% endblock %}

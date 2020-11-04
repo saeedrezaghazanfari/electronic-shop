@@ -1,0 +1,114 @@
+
+/* CSS3 Cdoes */
+
+header{
+    text-align: center;
+}
+#navbarstatic{
+    margin-top: -180px !important;
+    z-index: 20;
+}
+#logo{
+    width: 150px;
+    height: 100px;
+}
+.headercontainer{
+    height: 250px;
+    background: linear-gradient( #043353, #0b598d);
+}
+#NavbarContactus{
+    padding: 15px;
+}
+.icon{
+    font-size: 12pt;
+    border-radius: 50%;
+    padding: 8px;
+    color: #043353;
+    background-color: #E4DFCF;
+}
+.hoverfontclass{
+    color: #E4DFCF;
+    font-size: 10pt;
+}
+.hoverfontclass:hover{
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.hoverfontclass:hover .icon{
+    transition: all 0.3s;
+    border-radius: 50%;
+    padding: 8px;
+    color:  #043353 !important;
+    background-color: #FAF8F0;
+    transform: scale(1.2);
+}
+.icon,.hoverfontclass,.nav-link,#imgdowner:not(:hover){
+    transition: all 0.3s;
+}
+.rectcenter{
+    padding: 30px;
+    background: linear-gradient(#fafafa 80%, white);
+    border-radius: 20px;
+    padding-bottom: 40px !important;
+}
+.navbar{
+    background-color: #fafafa !important;
+}
+.active a{
+    color: #0b598d !important;
+    font-weight: 900;
+    transform: scale(1.1);
+}
+.nav-link{
+    color: #0b598d !important;
+}
+.nav-link:hover{
+    transition: all 0.3s;
+    color: #0b598d !important;
+    font-weight: 900;
+    transform: scale(1.1);
+}
+.dropdown-item:hover{
+    transition: all 0.3s;
+    color: #0b598d !important;
+    transform: scale(1.1);
+}
+.imgcaroudel{
+    height: 400px;
+    width: 100%;
+}
+.downer{
+    margin-top: 16px; 
+    position: absolute;
+    border-radius: 50%;
+}
+#imgdowner{
+    height: 40px;
+    width: 40px;
+}
+#imgdowner:hover{
+    transition: all 0.3s;
+    transform: scale(1.1);
+}
+.p{
+    text-indent: 20px;
+    text-align: justify;
+}
+.login-btn{
+    background-color: #0b598d;
+    color: #FAF8F0 !important;
+}
+.register-btn{
+    background-color: #043353;
+    color: #FAF8F0 !important;
+}
+#usernameTOP{
+    color: white;
+}
+.shad{
+    box-shadow: 2px 2px 15px rgb(179, 179, 179);
+}
+.overflow-auto{
+    max-height: 300px;
+    overflow-y: auto;
+}

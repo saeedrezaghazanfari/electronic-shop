@@ -1,0 +1,90 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}پنل کاربری | فروشگاه الکترونیک{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <section id="body">
+        <div class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/info" class="aInFooter">پنل کاربری</a>
+                </b>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-md-3 shad">
+                    {# sideBar #}
+                    {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="shad p-3">
+
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b>اطلاعات حساب کاربری</b>
+                        </div>
+                        <br>
+
+                        <div class="row text-muted">
+                            <div class="col-md-6">
+                                <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.3s"><i class="fa fa-user"></i> نام و نام خانوادگی: <b>{{ user.get_full_name }}</b></p>
+                                <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.6s"><i class="fa fa-user"></i> نام کاربری: <b>{{ user.username }}</b></p>
+                                <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.9s"><i class="fa fa-envelope"></i> ایمیل: <b>{{ user.email }}</b></p>
+                                <br>
+                                <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="1.2s">
+                                    {% if userProfile.avator %}
+                                        <a href="{{ userProfile.avator.url }}" class="btn login-btn btn-sm d-inline">مشاهده ی تصویر پروفایل</a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.3s"><i class="fa fa-phone"></i> شماره تماس: <b>{% if not userProfile.phone %} - {% else %}{{ userProfile.phone }}{% endif %}</b></p>
+                                <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.6s"><i class="fa fa-wikipedia-w"></i> بیوگرافی: <b><p class="p pl-5 pr-5 wow animate__animated animate__fadeIn" data-wow-delay="2.5s">{{ userProfile.bio }}</p></b></p>
+                                <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.9s"><i class="fa fa-globe"></i> نام وبسایت: <b>{{ userProfile.webName }}</b></p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="shad p-3 mt-5">
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b>محصولات مورد علاقه ی شما</b>
+                        </div>
+
+                        <div class="p-3">
+
+                            {% if favs %}
+                                {% for fav in favs %}
+
+                                    <div class="mt-2 p-3 border wow animate__animated animate__fadeInUp" data-wow-delay="0.3s">
+                                        <a href="/user/favorites/show/{{ fav.product.id }}" class="aInFooter pl-5">{{ fav.product.title }}</a>
+                                        <a href="/user/favorites/remove/{{ fav.product.id }}" class="btn btn-sm register-btn float-right ml-1">حذف <i class="fa fa-trash"></i></a>
+                                        <a href="/user/favorites/show/{{ fav.product.id }}" class="btn btn-sm login-btn float-right">مشاهده <i class="fa fa-eye"></i></a>
+                                    </div>
+
+                                {% endfor %}
+                                {% else %}
+                                <div class="alert alert-warning">محصولی در لیست علاقه مندی های شما وجود ندارد.</div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <br><br>
+    </section>
+
+{% endblock %}
+

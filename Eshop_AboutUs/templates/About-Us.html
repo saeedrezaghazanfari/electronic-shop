@@ -1,0 +1,101 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}درباره ی ما{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section class="container mt-5">
+
+        <div class="bg-light p-3 text-blue border">
+            <b class="ml-5">
+                مسیر شما: &nbsp;
+                <a href="/" class="aInFooter">خانه</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="/About-Us" class="aInFooter">درباره ی ما</a>
+            </b>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                    <b>لوگوی فروشگاه</b>
+                </div>
+                <br>
+                <img src="{{ siteSetting.Logo.url }}" alt="this is Logo" class="img-responsive img-thumbnail wow animate__animated animate__fadeIn img-aboutus" >
+
+            </div>
+            <div class="col-md-8 text-center text-blue">
+
+                <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                    <b>{{ siteSetting.App_Name }}</b>
+                </div>
+                <br>
+                <br>
+                <br>
+                <span>ایمیل: </span>
+                <span class=" font-weight-bolder">{{ siteSetting.Email }} </span>
+                <br>
+                <span>فکس: </span>
+                <span class="number font-weight-bolder">{{ siteSetting.fax }}  </span>
+                <br>
+                <span>آدرس: </span>
+                <span class=" font-weight-bolder">{{ siteSetting.address }} </span>
+                <br>
+                <br>
+                <div class="mt-2">
+
+                    <a href="{{ siteSetting.Phone_Number }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1.4s" >
+                        <i class="fa fa-phone icon"></i>
+                    </a>
+                    <a href="{{ siteSetting.Email }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1.3s">
+                        <i class="fa fa-envelope icon"></i>
+                    </a>
+                    <a href="{{ siteSetting.Instagram }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1.2s">
+                        <i class="fa fa-instagram icon"></i>
+                    </a>
+                    <a href="{{ siteSetting.Youtube }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1.1s">
+                        <i class="fa fa-youtube-play icon"></i>
+                    </a>
+                    <a href="{{ siteSetting.Whatsup }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1s" >
+                        <i class="fa fa-whatsapp icon"></i>
+                    </a>
+                    <a href="{{ siteSetting.Telegram }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeIn " data-wow-delay="0.9s" >
+                        <i class="fa fa-telegram icon"></i>
+                    </a>
+
+                </div>
+                <br>
+
+            </div>
+        </div>
+
+        <div class="bg-light p-1 mt-4 text-blue text-center border leftRightBorder">
+            <b>درباره ی ما</b>
+        </div>
+        <p class="text-muted wow animate__animated animate__fadeIn p-2 " data-wow-delay="2s" >
+            {{ siteSetting.AboutUs | safe }}
+         </p>
+
+        <div class="bg-light p-1 mt-4 text-blue text-center border leftRightBorder">
+            <b>ما در نقشه!</b>
+        </div>
+        <br>
+        <div id="map"></div>
+        <br>
+        <br>
+    </section>
+
+    <script>
+        // initialize the map
+        var map = L.map('map').setView([{{ siteSetting.X_inTheWorld }}, {{ siteSetting.Y_inTheWorld }}], 13);
+        // load a tile layer
+        L.tileLayer('https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=durDPqa9NsWAaZV32ECd',
+        {
+              attribution: '<a href="/">&copy; {{ siteSetting.App_Name }}</a>',
+              maxZoom: 17,
+              minZoom: 9
+        }).addTo(map);
+        var marker = L.marker([{{ siteSetting.X_inTheWorld }}, {{ siteSetting.Y_inTheWorld }}]).addTo(map);
+    </script>
+{% endblock %}

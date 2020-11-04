@@ -1,0 +1,36 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}ارسال ایمیل{% endblock %}
+{% load static %}
+{% block content %}
+
+    <!-- body -->
+    <section class="container mt-5 shad p-3">
+
+        <div class="bg-light p-1 text-blue text-center border">
+            <b>ارسال ایمیل</b>
+        </div>
+        <br>
+
+        <div class="p-2">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="email" name="emailForget" class="form-control form-control-sm wow animate__animated animate__fadeInRight" data-wow-delay="0.5s" required autofocus placeholder="ایمیل خود را وارد کنید:">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn login-btn btn-sm float-right btn-block wow animate__animated animate__fadeIn" data-wow-delay="1.5s">ارسال ایمیل</button>
+                    </div>
+                </div>
+            </form>
+
+            <p class="p pt-3">
+                یک ایمیـل حاوی لینک بازیابی کلمـه عبـور برای شما ارسال خواهـد شد.
+            </p>
+
+        </div>
+
+    </section>
+    <br>
+    <br>
+{% endblock %}

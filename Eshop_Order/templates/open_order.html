@@ -1,0 +1,169 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load render_partial %}
+{% block titlePage %}سبد خرید {% endblock %}
+{% load static %}
+{% block content %}
+
+    <section class="container mt-5">
+
+        {% if ex == True and orders != False %}
+            <table class="table text-center table-hover table-responsive-sm table-striped">
+
+                <thead class=" bg-blue text-white">
+                    <th>
+                        کالا
+                    </th>
+                    <th>
+                        قیمت
+                    </th>
+                    <th>
+                        رنگ محصول
+                    </th>
+                    <th>
+                        تعداد
+                    </th>
+                    <th>
+                        مجموع
+                    </th>
+                    <th>
+                        حذف کالا
+                    </th>
+                </thead>
+
+                <tbody>
+
+                    {% for order in orders %}
+                    <tr>
+                        <td>
+                            <a href="{{ order.product.get_absolute_url }}" class="aInTables wow animate__animated animate__fadeInRight" data-wow-delay="0.2s">
+                                <span>{{ order.product.title }}</span><br>
+                                <span class="font-small">شناسه ی <span class="number">{{ order.product.id }}</span></span>
+                            </a>
+                        </td>
+                        <td class=" wow animate__animated animate__fadeInUp" data-wow-delay="0.4s"><span class="number">{{ order.product.price }} </span> تومان </td>
+                        <td class="wow animate__animated animate__fadeInUp" data-wow-delay="0.6s">{% if order.productColor %}{{ order.productColor }}{% else %}-{% endif %}</td>
+                        <td>
+
+                            <div class="text-center">
+
+                                <span class=" wow animate__animated animate__fadeIn" data-wow-delay="1.6s"><a href="/add-one-to-product/{{ order.id }}" class="btn btn-sm login-btn"><i class="fa fa-plus"></i></a></span>
+                                <span class="number numberFieldform bg-light border">{{ order.count }}</span>
+                                {% if not order.count <= 1 %}
+                                    <span class=" wow animate__animated animate__fadeIn" data-wow-delay="1.7s"><a href="/mines-one-from-product/{{ order.id }}" class="btn btn-sm btn-danger"><i class="fa fa-minus"></i></a></span>
+                                {% endif %}
+                            </div>
+
+                        </td>
+                        <td class="text-blue font-weight-bolder wow animate__animated animate__fadeInUp" data-wow-delay="0.6s"><b class="number">{{ order.get_priceCount_total }}</b> تومان </td>
+                        <td>
+                            <a href="/remove-from-product/{{ order.id }}" class="btn login-btn btn-sm wow animate__animated animate__fadeIn" data-wow-delay="1.8s"><i class="fa fa-trash"></i></a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+            {% else %}
+                <div class="alert alert-warning">
+                    <p class="p">محصولی در سبدخرید شما <b>وجود ندارد</b>.</p>
+                    <p class="p">شما میتوانید برای خرید به قسمت <a href="/Product/List" class="aInFooter">فروشگاه</a> رفته و محصول مورد نظر خود را به سبد خرید اضافه کنید. سپس میتوانید محصول را خریداری کنید.</p>
+                </div>
+        {% endif %}
+
+        {% if userOrder != 0 %}
+        <div class="bg-light border mt-5 p-3 leftRightBorder">
+            <h5>نهایی کردن سفارش یا ادامه خریـد ؟!</h5>
+            <p>در صورتیکـه کوپن خریـد و یا کد تخفیف داریـد میتوانید از آن استفاده نمایید.</p>
+        </div>
+
+        <form action="/send-request" method="post">
+            <div class="row mt-4 shad p-3">
+
+                <div class="col-md-6 wow animate__animated animate__fadeInUp" data-wow-delay="0.7s">
+
+                    <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                        <b>استفاده از کد تخفیف</b>
+                    </div>
+                    <br>
+
+                    <label for="CopenCode">کد تخفیف خود را وارد کنید:</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-sm" id="CopenCode" name="CopenCode" placeholder="کد تخفیف">
+
+                        <div class="input-group-prepend">
+                            <span class="input-group-button">
+                                <a id="openOffCodeBTN" class="btn login-btn btn-sm"> اعمال کد تخفیف <i class="spinner-border spinner-border-sm" id="loading"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger d-none" id="errCode">کد شما به درستی وارد نشده است.</div>
+                </div>
+
+                <div class="col-md-6 wow animate__animated animate__fadeInUp" data-wow-delay="1s">
+
+                    <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                        <b>نهایی کردن خرید</b>
+                    </div>
+                    <br>
+
+                    <div class="p-3 text-blue">
+
+                        <span class="float-left d-inline"><b>مجموع:</b></span>
+                        <span class="float-right d-inline"><b id="ManyPrice" class="number">{{ userOrder }}</b> تومان</span>
+                        <br><br>
+                        <span class="float-left d-inline"><b>نحوه ی پرداخت:</b></span>
+                        <span class="float-right d-inline"><b>درگاه پرداخت زرین پال</b></span>
+
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-block login-btn btn-sm mt-1 float-right">پرداخت</button>
+                        <br>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+
+        {% endif %}
+        <br>
+        <br>
+    </section>
+
+<script>
+    $(document).ready(function () {
+
+        $('#loading').hide()
+
+        $('#openOffCodeBTN').click(function () {
+            $('#loading').show()
+            var CopenCode = $('#CopenCode').val()
+            if(CopenCode){
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "openOffCode" %}',
+                    data:{
+                        a: CopenCode,
+                    },
+                    dataType: 'json',
+                    success:function (response) {
+                        if(response['valid'] == true){
+                            $('#loading').hide()
+                            $('#errCode').hide()
+                            $('#ManyPrice').text(response['final_total_off'])
+                        }
+                        else if(response['valid'] == false){
+                            $('#loading').hide()
+                            $('#errCode').show()
+                            $('#errCode').removeClass('d-none')
+                        }
+                    }
+                })
+            }
+        });
+    });
+
+</script>
+{% endblock %}
+

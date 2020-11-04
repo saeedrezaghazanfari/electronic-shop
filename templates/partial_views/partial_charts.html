@@ -1,0 +1,88 @@
+var ctx = document.getElementById('myChartpie').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['محصولات', 'پست ها', 'کاربران'],
+        datasets: [{
+            label: 'نمایش / روح',
+            data: [{{ products }}, {{ blogs }}, {{ blogs }}],
+            backgroundColor: [
+                'rgba(216, 27, 96, 0.6)',
+                'rgba(3, 169, 244, 0.6)',
+                'rgba(255, 152, 0, 0.6)',
+
+            ],
+            borderColor: [
+                'rgba(216, 27, 96, 1)',
+                'rgba(3, 169, 244, 1)',
+                'rgba(255, 152, 0, 1)',
+
+            ],
+            borderWidth: 5
+        }]
+    },
+    options: {
+        legend: {
+            display: true,
+        },
+        title: {
+            display: true,
+            text: 'سرشماری اطلاعات سایت با نمودار دایره ای',
+            position: 'top',
+            fontSize: 20,
+            padding: 20,
+            fontFamily: 'sahel'
+        },
+        // scales: {
+        //     yAxes: [{
+        //         ticks: {
+        //             min: 0
+        //         }
+        //     }]
+        // },
+    }
+});
+var ctx = document.getElementById('myChartbar').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['محصولات', 'پست ها', 'کاربران'],
+        datasets: [{
+            label: 'نمایش / روح',
+            data: [{{ products }}, {{ blogs }}, {{ blogs }}],
+            backgroundColor: [
+                'rgba(216, 27, 96, 0.6)',
+                'rgba(3, 169, 244, 0.6)',
+                'rgba(255, 152, 0, 0.6)',
+
+            ],
+            borderColor: [
+                'rgba(216, 27, 96, 1)',
+                'rgba(3, 169, 244, 1)',
+                'rgba(255, 152, 0, 1)',
+
+            ],
+            borderWidth: 5
+        }]
+    },
+    options: {
+        legend: {
+            display: true,
+        },
+        title: {
+            display: true,
+            text: 'سرشماری اطلاعات سایت با نمودار ستونی',
+            position: 'top',
+            fontSize: 20,
+            padding: 20,
+            fontFamily: 'sahel'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    min: 0
+                }
+            }]
+        },
+    }
+});

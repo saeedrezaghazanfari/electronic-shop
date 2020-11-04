@@ -1,0 +1,10 @@
+{% load static %}
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <input type="file" id="goToFile" name="avatorImage" class="d-none">
+    <label for="goToFile">
+        <img src="{{ userProfile.avator.url }}" class="imgAvator img-fluid wow animate__animated animate__flipInX" data-wow-delay="1s" alt="avator image user">
+    </label>
+
+    <button type="submit" class="btn btn-sm login-btn">ثبت آواتور <i class="fa fa-edit"></i></button>
+</form>

@@ -1,0 +1,82 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}ویرایش اطلاعات حساب کاربری{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <!-- body -->
+    <section id="body">
+        <div class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/info" class="aInFooter">پنل کاربری</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/edit" class="aInFooter">ویرایش حساب کاربری</a>
+                </b>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-md-3 shad">
+                    {# sideBar #}
+                    {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="shad p-3">
+
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b>ویرایش اطلاعات حساب کاربری</b>
+                        </div>
+                        <br>
+
+                        <form  enctype="multipart/form-data" method="POST">
+                            {% csrf_token %}
+                            <div class="row p-3">
+                                <div class="col-md-6 p-2 wow animate__animated animate__fadeInUp" data-wow-delay="0.3s">
+                                    <label for="{{ editform.firstname.id_for_label }}">{{ editform.firstname.label|safe }}</label>
+                                    {{ editform.firstname }}
+                                </div>
+                                <div class="col-md-6 p-2 wow animate__animated animate__fadeInUp" data-wow-delay="0.3s">
+                                    <label for="{{ editform.lastname.id_for_label }}">{{ editform.lastname.label|safe }}</label>
+                                    {{ editform.lastname }}
+                                </div>
+                            </div>
+                            <div class="row p-3">
+                                <div class="col-md-6 p-2 wow animate__animated animate__fadeInUp" data-wow-delay="0.6s">
+                                    <label for="{{ editform.phone.id_for_label }}">{{ editform.phone.label|safe }}</label>
+                                    {{ editform.phone }}
+                                </div>
+                                <div class="col-md-6 p-2 wow animate__animated animate__fadeInUp" data-wow-delay="0.6s">
+                                    <label for="{{ editform.webName.id_for_label }}">{{ editform.webName.label|safe }}</label>
+                                    {{ editform.webName }}
+                                </div>
+                            </div>
+                            <div class="row p-3">
+                                <div class="col-md-6 p-2 wow animate__animated animate__fadeIn" data-wow-delay="0.9s">
+                                    <label for="{{ editform.bio.id_for_label }}">{{ editform.bio.label|safe }}</label>
+                                    {{ editform.bio }}
+                                </div>
+                                <div class="col-md-6"></div>
+                            </div>
+                            <button type="submit" class="btn login-btn btn-sm float-right wow animate__animated animate__fadeIn" data-wow-delay="2.5s">ذخیره ی تغییرات <i class="fa fa-edit"></i></button>
+                            <br>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </section>
+
+{% endblock %}
+

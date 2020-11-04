@@ -1,0 +1,10 @@
+{% load static %}
+
+{% for slide in slides %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <img src="{{ slide.image.url }}" alt="{{ slide.message }}" class="img-responsive imgcaroudel">
+        <div class="carousel-caption radius bg-light-opacity text-blue p-1 pt-2">
+            <a href="{{ slide.url }}" target="_blank" class="aInFooter"><p>{{ slide.message }}</p></a>
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,211 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}جزئیات {{ product.title }}{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section class="container mt-5">
+
+        <div class="row bg-light p-3 text-blue border">
+            <b class="ml-5">
+                مسیر شما: &nbsp;
+                <a href="/" class="aInFooter">خانه</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="/Product/List" class="aInFooter">محصولات</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="{{ product.get_absolute_url }}" class="aInFooter">{{ product.title }}</a>
+            </b>
+        </div>
+        <br>
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="shad p-3">
+
+                    <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                        <b>تصاویر محصول</b>
+                    </div>
+                    <br>
+
+                    <img src="{{ product.image.url }}" id="mainImageInslideShow" alt="{{ product.title }}" class="img img-responsive img-thumbnail imginDetail">
+
+                    <div class="owl-carousel owl-theme pt-3 pb-3 text-center bg-light">
+
+                        {% for gallery in galleries %}
+                            <div class="item">
+                                <img src="{{ gallery.image.url }}" alt="{{ gallery.title }}" class="img img-responsive img-thumbnail imgSlideShow">
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                    {% if request.user.is_authenticated %}
+                        <div id="initialVW">
+                            {% if ex_fav == False %}
+                                <a id="clickAJfavs" class="mt-4 text-white btn-block btn btn-success btn-sm wow animate__animated animate__fadeIn" data-wow-delay="0.1s">افزودن به علاقه مندی ها <i class="spinner spinner-border spinner-grow-sm spinnerAJ"></i></a>
+                            {% else %}
+                                <div class="alert alert-success mt-4 ">این محصول قبلا به لیست علاقه مندی ها اضافه شده است.</div>
+                            {% endif %}
+                        </div>
+
+                        <div id="secendVW">
+                            <div class="alert alert-success mt-4 ">این محصول قبلا به لیست علاقه مندی ها اضافه شده است.</div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning mt-4 ">شما میتوانید با ورود به سایت، از امکانات سیستم بهره مند شوید.</div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+            <div class="col-md-8 shad p-3">
+
+                <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                    <b>اطلاعات محصول</b>
+                </div>
+                <br>
+
+                <div class="row p-3">
+
+                    <div class="col-md-7">
+
+                        <div class=" p-1 text-blue wow animate__animated animate__fadeIn" data-wow-delay="0.4s">
+                            <h4 class="d-inline">نام محصول: <b>{{ product.title }}</b></h4>&nbsp;
+                            <span class="badge badge-pill badge-danger d-inline"> <span class="number"> {{ view }} </span> بازدید </span>
+                        </div>
+                        <div class=" p-1 text-blue wow animate__animated animate__fadeIn" data-wow-delay="0.6s">
+                            <h6 class="font-small">شناسه: <b class="number">{{ product.id }}</b></h6>
+                        </div>
+                        <div class=" p-1 text-blue wow animate__animated animate__fadeIn" data-wow-delay="0.8s">
+                            <h6 class="font-small">تاریخ ثبت: <b>{{ product.timeStamp | date }}</b></h6>
+                        </div>
+                        <div class=" p-1 text-blue wow animate__animated animate__fadeIn" data-wow-delay="1s">
+                            <h6 class="font-small">برند: <b>{{ product.brand }}</b></h6>
+                        </div>
+                        <div class=" p-1 text-blue wow animate__animated animate__fadeIn" data-wow-delay="1.2s">
+                            <h4>قیمت: <b class="number">{{ product.price }}</b> تومان</h4>
+                        </div>
+                        <br>
+                    </div>
+
+                    <div class="col-md-5 bg-light p-3 border wow animate__animated animate__fadeIn" data-wow-delay="2.5s">
+
+                        <form action="/add-user-order" method="POST">
+                            {% csrf_token %}
+                            {{ orderForm.productId }}
+                            <label for="{{ orderForm.count.id_for_label }}" class="font-small">{{ orderForm.count.label|safe }}</label>
+                            {{ orderForm.count }}
+                            <br>
+
+                            <div class="text-center">
+
+                                {% for productColor in productColors %}
+
+                                    <div class="custom-control custom-radio d-inline">
+                                        <input type="radio" class="custom-control-input" id="{{ productColor.color }}" name="selectColor" value="{{ productColor.color }}" {% if forloop.counter == 1 %}checked{% endif %}>
+                                        <label class="custom-control-label labelFilter" for="{{ productColor.color }}">{{ productColor.color }}</label>
+                                    </div>&nbsp;&nbsp;
+
+                                {% endfor %}
+
+                            </div>
+                            <br>
+                            <button type="submit" class="btn login-btn btn-sm float-right">افزودن به سبد خرید <i class="fa fa-shopping-cart"></i></button>
+
+                        </form>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+
+                </div>
+
+                <div class="text-blue">
+                    <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                        <b>توضیحات محصول</b>
+                    </div>
+                    <br>
+                    <p class="p text-muted">
+                        {{ product.description | safe }}
+                    </p>
+                    <br>
+                </div>
+
+                <div class="text-blue">
+                    <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                        <b>تگ های محصول</b>
+                    </div>
+
+                    <div class="mt-4">
+
+                        {% for tag in tags %}
+                            <a href="/Product/Search?field={{ tag.title }}" class="login-btn btn-sm btn mt-2"><i class="fa fa-tag"></i>&nbsp;{{ tag.title }}</a>
+                        {% endfor %}
+
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+            <b>محصولات مرتبط</b>
+        </div>
+        <br>
+        <div class="owl-carousel owl-theme pt-3 mt-1 pb-3 text-center bg-light shad">
+
+            {% for rel in related %}
+
+            <div class="item">
+                <div class="card my-card p-1">
+                    <img src="{{ rel.image.url }}" class="img-responsive img-top prolistimage" alt="">
+                    <div class="card-body">
+                        <h5 class="text-center bg-light text-blue p-1 leftRightBorder"><b>{{ rel.title }}</b></h5>
+                        <span class="d-inline float-left bg-light p-1"><span class="number">{{ rel.price }}</span> تومان</span>
+                        <b class="d-inline float-right bg-light p-1">برند: {{ rel.brand }}</b>
+                        <br>
+                        <br>
+                        <a href="{{ rel.get_absolute_url }}" class="btn btn-sm login-btn btn-block">مشاهده <i class="fa fa-eye"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+        <div class="mt-4">
+            <a href="/Product/List" class="btn btn-sm register-btn float-right">برگشت به لیست محصولات</a>
+        </div>
+        <br><br>
+
+    </section>
+
+    <script>
+
+        $('.spinnerAJ').hide();
+        $('#secendVW').hide();
+
+        $('#clickAJfavs').click(function () {
+            $('.spinnerAJ').show();
+            $.ajax({
+                type: 'GET',
+                url: '{% url "add_favorites" %}',
+                data:{
+                    productID: {{ product.id }}
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if(response['set'] == true){
+                        $('#initialVW').hide();
+                        $('#secendVW').show();
+                        $('.spinnerAJ').hide();
+                    }
+                }
+            });
+        });
+    </script>
+    
+{% endblock %}

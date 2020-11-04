@@ -1,0 +1,163 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <!-- body -->
+    <section id="body">
+
+        <div class="container bg-light p-3  mt-5 text-blue border">
+            <b class="ml-5">
+                مسیر شما: &nbsp;
+                <a href="/" class="aInFooter">خانه</a>
+            </b>
+        </div>
+        <br>
+        <div class="container">
+
+            <div class="row bg-light p-3 text-blue shad" >
+                <div class="col-md-6">
+                    <img src="{{ siteSetting.Logo.url }}" alt="{{ siteSetting.App_Name }}" class="bodiesimages">
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mt-5 font-weight-bolder text-blue">{{ siteSetting.App_Name }}</h5>
+                    <p class="p text-justify">
+                        {{ siteSetting.AboutUs | safe | truncatewords:60 }}
+                    </p>
+                    <a href="/About-Us" class="btn text-blue register-btn mt-2 mb-2 btn-sm font-small float-right">اطلاعات بیشتر</a>
+                    <br>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container mt-5 bg-light p-1 text-blue text-center border leftRightBorder">
+            <b>آخرین محصولات</b>
+        </div>
+        <br>
+
+        <!-- the last products -->
+        <div class="container owl-carousel owl-theme p-3 bg-light shad">
+
+            {% for product in latest_pro %}
+
+            <div class="item">
+                <div class="card my-card p-1">
+                    <img src="{{ product.image.url }}" class="img-responsive img-top" alt="{{ product.title }}">
+                    <div class="card-body">
+                        <h5 class="p-1 text-center bg-light text-blue leftRightBorder"><b>{{ product.title }}</b></h5>
+                        <span class="p-1 d-inline float-left bg-light"><span class="number">{{ product.price }}</span> تومان</span>
+                        <b class="p-1 d-inline float-right bg-light">برند: {{ product.brand }}</b>
+                        <br>
+                        <br>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-sm login-btn btn-block">مشاهده <i class="fa fa-eye"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+            <div class="container mt-5 bg-light p-1 text-blue text-center border leftRightBorder">
+            <b>پر بازدید ترین محصولات</b>
+        </div>
+        <br>
+
+        <!-- the last products -->
+        <div class="container owl-carousel owl-theme p-3 bg-light shad ">
+
+            {% for mostView in mostViews %}
+
+            <div class="item">
+                <div class="card my-card p-1">
+                    <img src="{{ mostView.image.url }}" class="img-responsive img-top" alt="{{ mostView.title }}">
+                    <div class="card-body">
+                        <h5 class="p-1 text-center bg-light text-blue leftRightBorder"><b>{{ mostView.title }}</b></h5>
+                        <span class="p-1 d-inline float-left bg-light"><span class="number">{{ mostView.price }}</span> تومان</span>
+                        <b class="p-1 d-inline float-right bg-light">برند: {{ mostView.brand }}</b>
+                        <br>
+                        <br>
+                        <a href="{{ mostView.get_absolute_url }}" class="btn btn-sm login-btn btn-block">مشاهده <i class="fa fa-eye"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="container mt-5 bg-light p-1 text-blue text-center border leftRightBorder">
+            <b>آخرین وبلاگ ها</b>
+        </div>
+        <br>
+
+        <!-- the last blogs -->
+        <div class="container owl-carousel owl-theme p-3 bg-light shad">
+
+            {% for post in posts %}
+
+            <div class="item">
+                <div class="card my-card p-1">
+                    <img src="{{ post.image.url }}" class="img-responsive img-top" alt="{{ post.title }}">
+                    <div class="card-body">
+                        <h5 class="p-1 text-center bg-light text-blue leftRightBorder"><b>{{ post.title }}</b></h5>
+                        <b class="p-1 d-inline bg-light"> {{ post.timeStamp | timesince }} پیش</b>
+                        <br>
+                        <br>
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-sm login-btn btn-block">مشاهده <i class="fa fa-eye"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- send message to us -->
+        <div class="p-5 fixedimage mt-5">
+
+            <div class="container card card-sm shad">
+                <div class="card-header cardheader">
+
+                </div>
+                <div class="card-body">
+                    <p class="p">
+                        با ارسال نظر مارا دلگرم کنید:
+                    </p>
+                    <form method="post" class="text-center">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {{ form }}
+                        <br>
+                        <button type="submit" class="btn btn-sm login-btn float-right">
+                            ارسال
+                            <i class="fa fa-upload"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- our Location -->
+            <div class="float-right "><a href="/About-Us" class="d-block">
+                <img class="Mylocation" src="{% static 'img/location.jpg' %}" alt="location"></a>
+            </div>
+            <br>
+        </div>
+
+    </section>
+
+    <!-- brands -->
+    <div class="row bg-light">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="owl-carousel owl-theme pt-2 pb-2 text-center">
+
+                {% render_partial 'Brands_partial_Page' %}
+
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+{% endblock %}

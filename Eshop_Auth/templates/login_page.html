@@ -1,0 +1,97 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}ورود{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section class="container mt-5">
+        <div class="bg-light p-3 text-blue border">
+            <b class="ml-5">
+                مسیر شما: &nbsp;
+                <a href="/" class="aInFooter">خانه</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="/Auth/Login" class="aInFooter">ورود</a>
+            </b>
+        </div>
+        <br>
+
+        <div class="card shad">
+
+            <div class="card-header bg-blue text-white"></div>
+
+            <div class="row">
+
+                <div class="col-md-6 p-4">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="p-3 font-weight-bolder bg-light">ورود کاربر <i class="fas fa-sign-in-alt"></i></h6>
+                            <p class="p-1 p">
+                                در صورت درست بودن اطلاعات وارد شده، به صورت اتوماتیک به صفحه اصلی فروشگاه وارد میشوید .
+                            </p>
+
+                            {% if loginForm.email.errors %}
+                                <hr>
+                                {% for Err in loginForm.email.errors %}
+                                    <p class="alert alert-danger">
+                                        {{ Err | safe }}
+                                    </p>
+                                {% endfor %}
+                            {% endif %}
+                            {% if loginForm.password.errors %}
+                                <hr>
+                                {% for passwordErr in loginForm.password.errors %}
+                                    <p class="alert alert-danger">
+                                        {{ passwordErr | safe }}
+                                    </p>
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body" style="direction: rtl;">
+                        <form class="form" method="POST">
+                            {% csrf_token %}
+                            <div class="bg-light p-3">
+                                <label for="{{ loginForm.email.id_for_label }}">{{ loginForm.email.label | safe }}</label>
+                                {{ loginForm.email }}
+                            </div>
+
+                            <div class="bg-light p-3 mt-2">
+                                <label for="{{ loginForm.password.id_for_label }}">{{ loginForm.password.label | safe }}</label>
+                                <div class="input-group">
+
+                                    {{ loginForm.password }}
+                                    <div class="input-group-prepend wow animate__animated animate__fadeIn " data-wow-delay="1s">
+                                        <span class="input-group-text"><i id="eye2" class="fas fa-eye"></i></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="custom-control custom-checkbox ml-4 trleft">
+                                <input type="checkbox" class="custom-control-input" id="shpw">
+                                <label class="custom-control-label" for="shpw">نمایش رمز عبور <i id="eye" class="fas fa-eye"></i></label>
+                            </div>
+                            <a href="/Auth/send-email-pw" class="aForget">رمز خود را فراموش کرده اید!</a>
+
+                            <br>
+                            <br>
+
+                            <input type="submit" value="ورود" class="btn login-btn btn-block btn-sm wow animate__animated animate__fadeIn " data-wow-delay="3s" >
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <br>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% load render_partial %}
+{% load static %}
+
+    <!-- Upper -->
+    <div class="uppersection">
+        <a href="#" ><img src="{% static 'img/upper.png' %}" alt="upper Division"></a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="p-3 footerColor">
+
+        <div class="row text-light">
+
+            <div class="col-lg-3 p-4 ">
+                <ul class="ulInFooter">
+                    <li><a href="/"> خانه</a></li>
+                    <li><a href="/user/info"> حساب کاربری</a></li>
+                    <li><a href="/my-order"> سبد خرید</a></li>
+                    <li><a href="/Product/List"> فروشگاه</a></li>
+                    <li><a href="/Blog/List"> آخرین اخبار</a></li>
+                    <li><a href="/About-Us"> درباره ما</a></li>
+                    <li><a href="/api/get-active-products">API</a></li>
+                    <li><a href="/Contact-Us"> تماس باما</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 p-4 ">
+                <ul class="ulInFooter">
+
+                    {% render_partial 'Footer_categories_partail' %}
+
+                </ul>
+            </div>
+            <div class="col-lg-3 p-4 ">
+                <ul class="ulInFooter">
+
+                    {% render_partial 'Footer_brands_partail' %}
+
+                </ul>
+            </div>
+            <div class="col-lg-3 p-4">
+
+                <a href="https://www.zarinpal.com"><img src="{% static 'img/zarinpal.png' %}" class="bg-light" alt=""></a>
+
+                <p class="p pt-3 text-muted">
+                    در صورت مشاهده ی هرگونه مشکل در عملکرد وبسایت ، تصویر خطا و یا URL صفحه ای که در آن به مشکل برخورد کرده اید را در این <a href="/report-Spam" class="aInFooter">صفحه</a> به اطلاع ما برسانید.
+                </p>
+
+            </div>
+
+        </div>
+        <div class="text-center p-1 mt-1">
+            <a href="{{ siteSetting.Phone_Number }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="0.7s" >
+                <i class="fa fa-phone icon"></i>
+            </a>
+            <a href="{{ siteSetting.Email }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1.1s">
+                <i class="fa fa-envelope icon"></i>
+            </a>
+            <a href="{{ siteSetting.Instagram }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1.5s">
+                <i class="fa fa-instagram icon"></i>
+            </a>
+            <a href="{{ siteSetting.Youtube }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="1.3s">
+                <i class="fa fa-youtube-play icon"></i>
+            </a>
+            <a href="{{ siteSetting.Whatsup }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeInDown " data-wow-delay="0.9s" >
+                <i class="fa fa-whatsapp icon"></i>
+            </a>
+            <a href="{{ siteSetting.Telegram }}" class="hoverfontclass ml-1 wow animate__animated animate__fadeIn " data-wow-delay="0.5s" >
+                <i class="fa fa-telegram icon"></i>
+            </a>
+        </div>
+
+    </footer>

@@ -1,0 +1,70 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}تغییر رمز عبور{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+<section id="body">
+    <div class="container mt-5">
+
+        <div class="row bg-light p-3 text-blue border">
+            <b class="ml-5">
+                مسیر شما: &nbsp;
+                <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="/user/info" class="aInFooter">پنل کاربری</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="/user/change-pw" class="aInFooter">تغییر رمز عبور</a>
+            </b>
+        </div>
+        <br>
+
+        <div class="row">
+
+            <div class="col-md-3 shad">
+                {# sideBar #}
+                {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="shad p-3">
+
+                    <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                        <b>تغییر رمز عبور</b>
+                    </div>
+                    <br>
+
+                    <form method="POST">
+                        {% csrf_token %}
+{#                        <label for="{{ changePw.old_password.id_for_label }}">{{ changePw.old_password.label|safe }}</label>#}
+{#                        {{ changePw.old_password }}#}
+
+                        <div class="row p-3">
+                            <div class="col-md-6 p-2">
+                                <label for="passa">رمزعبور <b>جدید</b> را وارد کنید:</label>
+                                <input type="password" id="passa" name="newPass1" placeholder="رمز عبور جدید:" class="form-control form-control-sm wow animate__animated animate__fadeInUp" data-wow-delay="0.8s">
+{#                                <label for="{{ changePw.new_pw_1.id_for_label }}">{{ changePw.new_pw_1.label|safe }}</label>#}
+{#                                {{ changePw.new_pw_1 }}#}
+                            </div>
+                            <div class="col-md-6 p-2">
+                                <label for="passb">رمزعبور <b>جدید</b> را <b>دوباره</b> وارد کنید:</label>
+                                <input type="password" id="passb" name="newPass2" placeholder="تکرار رمز عبور جدید:" class="form-control form-control-sm wow animate__animated animate__fadeInUp" data-wow-delay="0.8s">
+{#                                <label for="{{ changePw.new_pw_2.id_for_label }}">{{ changePw.new_pw_2.label|safe }}</label>#}
+{#                                {{ changePw.new_pw_2 }}#}
+                            </div>
+
+                            <button type="submit" class="btn login-btn btn-sm mt-2 float-right">ثبت رمز عبور جدید</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <br><br>
+</section>
+
+{% endblock %}

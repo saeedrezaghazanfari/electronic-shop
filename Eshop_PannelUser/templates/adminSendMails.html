@@ -1,0 +1,92 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}مدیریت ایمیل ها{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <section id="body">
+        <div class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/info" class="aInFooter">پنل کاربری</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/admin/send-mails" class="aInFooter">مدیریت ایمیل ها</a>
+                </b>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-md-3 shad">
+
+                    {# sideBar #}
+                    {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="shad p-3">
+
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b>مدیریت ایمیل ها</b>
+                        </div>
+                        <br>
+
+                        <div class="alert alert-success">
+                            توجه داشته باشید که آخرین مقداری که در پنل ادمین تنظیم کردید اینجا نمایش داده میشود و همین ایمیل هم به کاربران ارسال میشود.
+                            <br>
+                            <br>
+                            نکته: بهتر است متن ایمیل ارسالی تشکلی از تگ های html و اسایل دهی css باشد.
+                        </div>
+
+                        {% if ex == True %}
+
+                        <p class="p text-muted">عنوان ایمیل:</p>
+                        <div class="p-3 bg-light text-center font-weight-bolder text-blue ">
+                            {{ emailCntent.subject }}
+                        </div>
+                        <br>
+
+                        <p class="p text-muted">محتوای ایمیل (کد):</p>
+                        <div class="p-3 bg-light text-center font-weight-bolder text-blue ">
+                            {{ emailCntent.content }}
+                        </div>
+                        <br>
+                        <br>
+
+                        <p class="p text-muted">محتوای ایمیل :</p>
+                        <div class="p-3 border radius">
+                            {{ emailCntent.content|safe }}
+                        </div>
+                        <br>
+                        <br>
+
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" name="switchMail" class="custom-control-input" value="send" id="switchemail">
+                                <label class="custom-control-label" for="switchemail">آیا از ارسال ایمیل به تمامی اعضا مطمئن هستید؟</label>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-sm login-btn float-right">ارسال ایمیل به کل اعضای وبسایت</button>
+                        </form>
+                        <br>
+                        {% else %}
+                            <div class="alert alert-warning">  ایمیلی در پنل ادمین تنظیم نشده است. شما میتوانید برای تنظیم ایمیل به این<a href="/admin/Eshop_Other/emails/" class="aInFooter"> لینک </a> وارد شوید. </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </section>
+
+
+{% endblock %}

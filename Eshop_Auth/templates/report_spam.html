@@ -1,0 +1,58 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}گزارش خطا{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section>
+
+        <div class="container mt-5">
+
+            <div class="bg-light p-1 mt-3 text-blue text-center border leftRightBorder">
+                <b>گزارش خطا</b>
+            </div>
+            <br>
+
+            <form enctype="multipart/form-data" method="POST" class="shad p-3">
+                {% csrf_token %}
+                {{ report.email }}
+                {{ report.username }}
+
+                <div class="row">
+                    <div class="col-md-6 mt-1">
+                        {{ report.subject }}
+                    </div>
+                    <div class="col-md-6 wow animate__animated animate__fadeIn mt-1" data-wow-delay="1s" >
+                        <label for="Fileinput"><b>تصویر خطا</b> را وارد کنید.</label>
+                        <input type="file" name="imageErr" id="Fileinput" class="d-none">
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    {{ report.massage }}
+                    {% if report.massage.errors %}
+                        {% for Err in report.massage.errors %}
+                            <br>
+                            <p class="alert alert-danger">
+                                {{ Err | safe }}
+                            </p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if report.subject.errors %}
+                        {% for Err in report.subject.errors %}
+                            <br>
+                            <p class="alert alert-danger">
+                                {{ Err | safe }}
+                            </p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <br>
+                <button type="submit" class="btn login-btn btn-sm float-right wow animate__animated animate__fadeInUp " data-wow-delay="3s">اعلام گزارش </button>
+                <br>
+            </form>
+        </div>
+        <br>
+    </section>
+
+{% endblock %}

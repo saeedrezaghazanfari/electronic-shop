@@ -1,0 +1,12 @@
+{% for category in categories %}
+
+    <li class="padder">
+        <b>
+            <a href="/Product/Search/Category/{{ category }}">
+                {{ category }}
+                <span class="badge badge-pill badge-blue float-right mr-3 number">{{ category.counter_category_items }}</span>
+            </a>
+        </b>
+    </li>
+
+{% endfor %}

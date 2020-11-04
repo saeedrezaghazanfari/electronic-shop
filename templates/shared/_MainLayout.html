@@ -1,0 +1,107 @@
+{% load static %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    {% include 'shared/_Header_Ref.html' %}
+    <title>{% block titlePage %}فروشگاه لوازم خانگی{% endblock %}</title>
+
+</head>
+<body>
+    <div class="row bg-white animate__animated animate__fadeIn " id="loader">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <img src="{% static 'img/preload.gif' %}" class="img img-fluid" alt="loading...">
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    {% render_partial 'Header_partial' %}
+    {% block content %}{% endblock %}
+    {% render_partial 'Footer_partial' %}
+    {% include 'shared/_Footer_Ref.html' %}
+
+   <div class="messagesClass">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messagesClass font-small">
+                    <div class="alert bg-linear-blue text-white alert-dismissible fade show removeAlertMsg" role="alert">
+                        {{ message | safe }}
+                        <button type="button" class="close btn" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+<script> new WOW().init(); </script>
+<script>
+// pre Load
+document.onreadystatechange = function() {
+    if (document.readyState !== "complete") {
+        document.querySelector( "body").style.visibility = "hidden";
+        document.querySelector( "body").style.backgroundColor= "white";
+        document.querySelector( "#loader").style.visibility = "visible";
+        document.querySelector( "#loader").classList.add('animate__slow');
+
+    } else {
+        document.querySelector( "#loader").style.display = "none";
+        document.querySelector( "body").style.visibility = "visible";
+        document.querySelector( "body").style.backgroundColor= "initial";
+    }
+};
+var owl = $('.owl-carousel');
+owl.owlCarousel({
+    items:4,
+    loop:true,
+    margin:10,
+    rtl: true,
+    autoplay:true,
+    autoplayTimeout:1000,
+    autoplayHoverPause:true,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:2,
+            // nav:true
+        },
+        600:{
+            items:3,
+            nav:false
+        },
+        1000:{
+            items:4,
+            // nav:true,
+            loop:false
+        }
+    }
+});
+$('.play').on('click',function(){
+    owl.trigger('play.owl.autoplay',[1000])
+})
+$('.stop').on('click',function(){
+    owl.trigger('stop.owl.autoplay')
+})
+setTimeout(()=>{
+    $('.removeAlertMsg').fadeOut()
+}, 5000);
+
+{% if '/Product' in request.path %}
+    $('#priceradio').click(function(){
+        $('#rangeDiv').slideDown()
+        changeprice();
+    });
+    $('#allradio').click(function(){
+        $('#rangeDiv').slideUp()
+        document.getElementById('rangeprice').value = '10000';
+    });
+{% endif %}
+
+{% if request.path == '/user/admin/charts' %}
+    {% render_partial 'charts_partial' %}
+{% endif %}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}لیست پست ها{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">خانه</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/Blog/List" class="aInFooter">لیست پست ها</a>
+                </b>
+            </div>
+            <br>
+
+            {% for obj in page_obj %}
+
+            <div class="row mt-2 p-2 bg-light border shad">
+                <div class="col-md-4">
+                    <img src="{{ obj.image.url }}" class="imgPostList img-thumbnail img-responsive wow animate__animated animate__fadeIn himag-200" data-wow-delay="1s" alt="">
+                </div>
+                <div class="col-md-8 p-2">
+
+                    <div class="p-1 text-blue wow animate__animated animate__fadeInUp " data-wow-delay="0.2s">
+                        <h5>عنوان پست: <b>{{ obj.title }}</b></h5>
+                    </div>
+                    <div class="p-1 text-blue wow animate__animated animate__fadeInUp" data-wow-delay="0.4s">
+                        <h5>نویسنده: <b>{{ obj.writer }}</b></h5>
+                    </div>
+                    <div class="p-1 text-blue font-small wow animate__animated animate__fadeInUp " data-wow-delay="0.6s" >
+                        <span>تاریخ: <b>{{ obj.timeStamp | timesince }} پیش</b></span>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="float-right">
+                        <button class="btn btn-danger btn-sm number wow animate__animated animate__fadeInUp" data-wow-delay="1.2s">{{ obj.LikePost }} <i class="fa fa-heart"></i></button>
+                        <button class="btn register-btn btn-sm number wow animate__animated animate__fadeInUp" data-wow-delay="1.2s">{{ obj.ViewPost }} <i class="fa fa-eye"></i></button>
+                        <button class="btn register-btn btn-sm number wow animate__animated animate__fadeInUp" data-wow-delay="1.2s">{{ obj.commentPost }} <i class="fa fa-comment"></i></button>
+                        <a href="{{ obj.get_absolute_url }}" class="btn login-btn btn-sm wow animate__animated animate__fadeInUp" data-wow-delay="1.4s">ادامه مطلب</a>
+                    </div>
+
+                </div>
+            </div>
+
+            {% endfor %}
+
+            <ul class="ulPaginator text-center mt-4">
+                {% if page_obj.has_previous %}
+                    <li class="btn login-btn btn-sm">
+                        <a href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+                    </li>
+                {% endif %}
+                {% for page in paginator.page_range %}
+                    {% if page == page_obj.number %}
+                        <li class="btn login-btn btn-sm activePage">
+                            <a href="?page={{ page }}" class="number">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="btn login-btn btn-sm">
+                            <a href="?page={{ page }}" class="number">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="btn login-btn btn-sm ">
+                        <a href="?page={{ page_obj.next_page_number }}">بعدی</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </section>
+
+{% endblock %}
+

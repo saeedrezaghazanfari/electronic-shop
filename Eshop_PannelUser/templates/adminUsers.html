@@ -1,0 +1,168 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}مدیریت کاربران{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+        <section id="body">
+        <div class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/info" class="aInFooter">پنل کاربری</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/admin/users" class="aInFooter">مدیریت کاربران</a>
+                </b>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-md-3 shad">
+
+                    {# sideBar #}
+                    {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="shad p-3">
+
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b>مدیریت کاربران</b>
+                        </div>
+                        <br>
+
+                        <table class="font-small table border text-center table-hover">
+                            <tbody>
+                                <p class="p text-muted">
+                                    <button data-target="#modalinfo" data-toggle="modal" class="btn btn-sm login-btn"><i class="fa fa-info"></i></button>
+                                    برای درک از کلمات کارمندی و یا ابرکاربر روی این <a href="" class="aInFooter font-weight-bolder" data-target="#modalinfo" data-toggle="modal">دکمه</a> کلیک کنید.
+                                </p>
+                                <p class="ml-3 text-muted">
+                                    <a href="/admin/online_users/onlineuseractivity/" target="_blank" class="btn btn-sm login-btn"><i class="fa fa-eye"></i></a>
+                                    کاربران آنلاین وبسایت: <b class="number font-weight-bolder" >{{ activeUsers }}</b> نفر <span class="badge badge-pill badge-blue">در <span class="number">15</span> دقیقه ی اخیر</span>
+                                </p>
+                                <tr class="bg-dark text-white">
+                                    <th>ردیف</th>
+                                    <th>نام کاربری</th>
+                                    <th>وضعیت ابرکاربر</th>
+                                    <th>فعال بودن</th>
+                                    <th>حذف کاربر</th>
+                                    <th>اعمال تغییرات</th>
+                                </tr>
+
+                                {% for user in users %}
+                                    <tr class="wow animate__animated animate__fadeIn {% if user.id == request.user.id %}bg-light{% endif %}" data-wow-delay="0.5s">
+                                        <td class="number">{% if user.id in activeUsersID %}<i class="fa fa-eye animate__animated animate__flash animate__slower animate__infinite "></i>{% else %}{{ forloop.counter }}{% endif %}</td>
+                                        <td><b>{{ user.username }}</b> <button data-target="#modalUser{{ user.id }}" data-toggle="modal" class="btn register-btn btn-sm"><i class="fa fa-plus"></i></button></td>
+
+                                        <form method="post" action="/user/admin/users/{{ user.id }}">
+                                            {% csrf_token %}
+                                            <td>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="customyes{{ user.id }}" name="adminstatus" value="yes" {% if user.is_superuser %}checked{% endif %} {% if user.id == request.user.id %}disabled{% endif %}>
+                                                    <label class="custom-control-label" for="customyes{{ user.id }}">بله</label>
+                                                </div>
+
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="customno{{ user.id }}" name="adminstatus" value="no" {% if not user.is_superuser %}checked{% endif %} {% if user.id == request.user.id %}disabled{% endif %}>
+                                                    <label class="custom-control-label" for="customno{{ user.id }}">نه</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="cccustomryes{{ user.id }}" name="activeUser" value="yes" {% if user.is_active %}checked{% endif %} {% if user.id == request.user.id %}disabled{% endif %}>
+                                                    <label class="custom-control-label" for="cccustomryes{{ user.id }}">بله</label>
+                                                </div>
+
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="cccustomrno{{ user.id }}" name="activeUser" value="no" {% if not user.is_active %}checked{% endif %} {% if user.id == request.user.id %}disabled{% endif %}>
+                                                    <label class="custom-control-label" for="cccustomrno{{ user.id }}">نه</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="customryes{{ user.id }}" name="removeUser" value="yes" {% if user.id == request.user.id %}disabled{% endif %}>
+                                                    <label class="custom-control-label" for="customryes{{ user.id }}">بله</label>
+                                                </div>
+
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" class="custom-control-input" id="customrno{{ user.id }}" name="removeUser" value="no" checked {% if user.id == request.user.id %}disabled{% endif %}>
+                                                    <label class="custom-control-label" for="customrno{{ user.id }}">نه</label>
+                                                </div>
+                                            </td>
+                                            <td>{% if not user.id == request.user.id %}<button type="submit" class="btn btn-sm login-btn"><i class="fa fa-edit"></i></button>{% else %}-{% endif %}</td>
+
+                                        </form>
+                                    </tr>
+                                {% endfor %}
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </section>
+
+{#  informations  #}
+    <div class="modal fade shadow-lg" id="modalinfo" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+
+                    <div class="card">
+                        <div class="card-header bg-blue"></div>
+                        <div class="card-body text-center">
+
+                            <p class="text-muted"><b>فعال بودن</b> : نشان می‌دهد که آیا این کاربر اجازهٔ فعالیت دارد یا خیر. به جای حذف کاربر این تیک را بردارید.</p>
+                            <p class="text-muted"><b>وضعیت کارمندی</b> : نشان می‌دهد که آیا این کاربر می‌تواند وارد این وبگاه مدیریت شود یا خیر.</p>
+                            <p class="text-muted"><b>ابرکاربر</b> : نشان می‌دهد که این کاربر همهٔ اجازه‌ها را دارد بدون آنکه به صراحت به او اختصاص داده شده باشد.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for user in users %}
+    {#  Modal  #}
+    <div class="modal fade shadow-lg" id="modalUser{{ user.id }}" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+
+                    <div class="card">
+                        <div class="card-header bg-blue"></div>
+                        <div class="card-body text-center">
+
+                            <p class="text-muted">نام کاربری: <b>{{ user.username }}</b></p>
+                            <p class="text-muted">IP: <b>{{ IP }}</b></p>
+                            <p class="text-muted">آیدی کاربر: <b class="number">{{ user.id }}</b></p>
+                            <p class="text-muted"> ایمیل: <b>{{ user.email }}</b></p>
+                            <p class="text-muted">نام: <b>{{ user.first_name }}</b></p>
+                            <p class="text-muted">نام خانوادگی: <b>{{ user.last_name }}</b></p>
+                            <p class="text-muted"> فعال: <b>{% if user.is_active == True %}<img src="{% static 'img/tik.PNG' %}" class="tikmultisize" alt="true">{% else %}<img src="{% static 'img/multi.PNG' %}" class="tikmultisize"  alt="false">{% endif %}</b></p>
+                            <p class="text-muted"> وضعیت کارمندی: <b>{% if user.is_staff == True %}<img src="{% static 'img/tik.PNG' %}" class="tikmultisize"  alt="true">{% else %}<img src="{% static 'img/multi.PNG' %}" class="tikmultisize"  alt="false">{% endif %}</b></p>
+                            <p class="text-muted"> ابرکاربر: <b>{% if user.is_superuser == True %}<img src="{% static 'img/tik.PNG' %}" class="tikmultisize"  alt="true">{% else %}<img src="{% static 'img/multi.PNG' %}" class="tikmultisize"  alt="false">{% endif %}</b></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

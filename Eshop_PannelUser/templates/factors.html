@@ -1,0 +1,105 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}فاکتور های من{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <section id="body">
+        <div class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user" class="aInFooter">پنل کاربری</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/my-factors" class="aInFooter">فاکتورهای من</a>
+                </b>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-md-3 shad">
+                    {# sideBar #}
+                    {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="shad p-3">
+
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b>فاکتورهای من</b>
+                        </div>
+                        <br>
+
+                        {% if ex == True %}
+
+                        <table class="table table-respponse border text-center">
+
+                            <tbody>
+                                <tr>
+                                    <th>نام محصول</th>
+                                    <th>تعداد محصول</th>
+                                    <th>قیمت کل</th>
+                                    <th>وضعیت پرداخت</th>
+                                    <th>جزئیات</th>
+                                </tr>
+
+                                {% for order in orders %}
+                                    <tr>
+                                        <td><b><a href="{{ order.product.get_absolute_url }}" class="aInFooter">{{ order.product.title }}</a></b></td>
+                                        <td class="number">{{ order.count }}</td>
+                                        <td><b class="number">{{ order.get_priceCount_total }}</b>تومان</td>
+                                        <td>{% if myorder.is_paid == True %}<img class="tikmultisize" src="{% static 'img/tik.PNG' %}" alt="true">{% else %}<img class="tikmulti" src="{% static 'img/multi.PNG' %}" alt="true">{% endif %}</td>
+                                        <td><button class="btn login-btn btn-sm" data-target="#modalfactor{{ order.id }}" data-toggle="modal">جزئیات</button></td>
+                                    </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                        {% else %}
+                            <div class="alert alert-warning">شما فاکتور خریدی ندارید.</div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </section>
+
+    {% for order in orders %}
+
+    {#  Modal  #}
+    <div class="modal fade shadow-lg" id="modalfactor{{ order.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+
+                    <div class="card">
+                        <div class="card-header bg-blue"></div>
+                        <div class="card-body text-center">
+
+                            <p class="text-muted">رنگ محصول: <b>{% if order.productColor %}{{ order.productColor }}{% else %}-{% endif %}</b></p>
+                            <p class="text-muted">برند: <b>{{ order.product.brand }}</b></p>
+                            <p class="text-muted">قیمت یک محصول: <b class="number">{{ order.product.price }} </b>تومان</p>
+                            <p class="text-muted">تاریخ پرداخت: <b>{% if not myorder.paymentDate %}-{% else %}{{ myorder.paymentDate }}{% endif %}</b></p>
+                            <p class="text-muted">کد پیگیری: <b>{% if not myorder.is_paid %}-{% else %}{{ myorder.is_paid }}{% endif %}</b></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+
+{% endblock %}
+

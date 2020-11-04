@@ -1,0 +1,212 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}جزئیات پست {{ blog.title }}{% endblock %}
+{% load static %}
+{% block content %}
+
+    <section class="container mt-5">
+
+        <div class="row bg-light p-3 text-blue border">
+            <b class="ml-5">
+                مسیر شما: &nbsp;
+                <a href="/" class="aInFooter">خانه</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="/Blog/List" class="aInFooter">لیست پست ها</a>
+                &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                <a href="{{ blog.get_absolute_url }}" class="aInFooter">جزئیات پست</a>
+
+            </b>
+        </div>
+        <br>
+
+        <div class="border">
+
+            <a href="" class="btn login-btn btn-sm number float-right mt-3 mr-3 disable wow animate__animated animate__fadeInDown " data-wow-delay="1s" >
+                {{ blog.timeStamp | time }} <i class="fa fa-calendar"></i>
+            </a>
+            <a href="" class="btn login-btn btn-sm number float-right mt-3 mr-1 disable wow animate__animated animate__fadeInDown " data-wow-delay="1.5s" >
+                {{ view }} <i class="fa fa-eye"></i>
+            </a>
+
+            <div class="imgBlogTopDeatil border " style="background-image: url({{ blog.image.url }});">
+
+                <div class="text-center textMessagesCenter bg-light-opacity p-3">
+
+                    <div class="p-1 text-blue">
+                        <h4 class="wow animate__animated animate__fadeInUp" data-wow-delay="1s"><b>{{ blog.title }}</b></h4>
+                    </div>
+                    <div class="p-1 text-blue font-small">
+                        <span class="wow animate__animated animate__fadeIn" data-wow-delay="2.4s"><b>{{ blog.timeStamp | timesince }} پیش</b></span>
+                    </div>
+                    <div class="p-1 text-blue">
+                        <h4 class="wow animate__animated animate__fadeInDown" data-wow-delay="1s"><b>{{ blog.writer }}</b></h4>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-3 p-3">
+
+                {{ blog.description | safe }}
+
+            </div>
+        </div>
+        <div class="float-left">
+            <div id="hideShowElm" class="d-block">
+                {% if bol %}
+                    {% if request.user.is_authenticated %}<a><img src="{% static 'img/redheart.jpg' %}" alt="like image" class="LikeOrDis"></a>{% endif %}
+                    <span class="spinner spinner-border text-blue ajaxLoadering mt-2 ml-2"></span>
+                {% else %}
+                    {% if request.user.is_authenticated %}<a><img src="{% static 'img/whiteheart.jpg' %}" alt="rael image" class="LikeOrDis"></a>{% endif %}
+                    <span class="spinner spinner-border ajaxLoadering mt-2 ml-2"></span>
+                {% endif %}
+                <span>توسط <b class="number">{{ likes }}</b> نفر پسندیده شده است.</span>
+            </div>
+            <div id="hideShowElmAjLIKE" class="d-none">
+                {% if request.user.is_authenticated %}<a><img src="{% static 'img/redheart.jpg' %}" alt="like image" class="LikeOrDis"></a>{% endif %}
+                <span class="spinner spinner-border ajaxLoadering mt-2 ml-2"></span>
+                <span>توسط <b class="number counterlike">{{ likes }}</b> نفر پسندیده شده است.</span>
+            </div>
+            <div id="hideShowElmAjREAL" class="d-none">
+                {% if request.user.is_authenticated %}<a><img src="{% static 'img/whiteheart.jpg' %}" alt="like image" class="LikeOrDis"></a>{% endif %}
+                <span class="spinner spinner-border ajaxLoadering mt-2 ml-2"></span>
+                <span>توسط <b class="number counterreal">{{ likes }}</b> نفر پسندیده شده است.</span>
+            </div>
+        </div>
+        <div class="float-right mt-3">
+            {% if blog.has_next == 'not' %}
+                <a href="{{ blog.next_Blog }}" class="btn login-btn btn-sm">بعدی <i class="fa fa-arrow-right"></i></a>
+            {% endif %}
+
+            {% if blog.has_prev == 'not' %}
+                <a href="{{ blog.previous_Blog }}" class="btn login-btn btn-sm">قبلی <i class="fa fa-arrow-left"></i></a>
+            {% endif %}
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <!-- conversation -->
+
+        <div class="p-3">
+
+            <div class="card shad">
+                <div class="card-header bg-blue text-white">
+                    <b>نظر خود را وارد کنید:</b>
+                </div>
+                <div class="card-body bg-light">
+                    <form method="post" class="text-center">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {{ form }}
+                        <br>
+                        <button type="submit" class="btn btn-sm register-btn btn-block"> ارسال پیام</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <br>
+            <br>
+
+            <div class="bg-light p-1 text-blue text-center border leftRightBorder">
+                <b>لیست نظرات</b>
+            </div>
+
+            {% for allCmt in allCmts %}
+                <div class="border p-3 mt-5 bg-light ">
+{#                    <img src="" data-id-CMT="{{ allCmt.id }}" class="imgConvers imgCMT" alt="{{ allCmt.user.username }}">#}
+                    <h6 class="d-inline font-weight-bolder">
+                        {{ allCmt.user.username }}
+                        <a href="/Blog/List/comments/report/{{ allCmt.id }}/{{ blog.id }}" class="btn btn-danger btn-sm font-small ml-4">گزارش</a>
+                        {% if request.user.is_superuser %}
+                            <a href="/Blog/List/comments/remove/{{ allCmt.id }}/{{ blog.id }}" class="btn btn-sm register-btn font-small">حذف</a>
+                        {% endif %}
+                    </h6>
+
+                    <p class="p mt-3 p-2 font-small">
+                        {{ allCmt.msg | safe }}
+                    </p>
+                    <div class="mt-1">
+                        <br>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="text" class="d-none" value="{{ allCmt.id }}" name="idCmt">
+                            <textarea name="msgReply" class="form-control form-control-sm p-2" rows="3" placeholder="پاسخ را وارد کنید:"></textarea>
+                            <button type="submit" class="btn login-btn btn-sm float-right mt-1 font-small"> ارسال پاسخ</button>
+                            <br>
+                        </form>
+                    </div>
+                </div>
+                <small class="text-muted float-right"><i>{{ allCmt.timeStamp | timesince }} پیش <i class="fa fa-clock"></i></i></small>
+
+                {% for a in allCmt.get_replies %}
+                    <div class="border p-3 mt-5 ml-5 bg-lighter">
+{#                        <img src="" id="imgRPL" data-id-RPL="{{ a.id }}" class="imgConvers" alt="{{ a.user.username }}">#}
+                        <h6 class="d-inline font-weight-bolder">
+                            {{ a.user.username }}
+                            <a class="btn login-btn text-white btn-sm font-small ml-4">پاسخ به {{ allCmt.user.username }}</a>
+                            <a href="/Blog/List/comments/replies/report/{{ a.id }}/{{ blog.id }}" class="btn btn-danger btn-sm font-small">گزارش</a>
+                            {% if request.user.is_superuser %}
+                                <a href="/Blog/List/comments/replies/remove/{{ a.id }}/{{ blog.id }}" class="btn btn-sm register-btn font-small">حذف</a>
+                            {% endif %}
+                        </h6>
+
+                        <p class="p mt-3 p-2 font-small">
+                            {{ a.msg | safe }}
+                        </p>
+                    </div>
+                    <small class="text-muted float-right"><i>{{ a.timeStamp | timesince }} پیش <i class="fa fa-clock"></i></i></small>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <br>
+    </section>
+
+    <script>
+        $('#hideShowElm').removeClass('d-none');
+        $('.LikeOrDis').show();
+        $('.ajaxLoadering').hide();
+
+        $('.LikeOrDis').click(function () {
+            $('.LikeOrDis').hide();
+            $('.ajaxLoadering').show();
+
+            $.ajax({
+                type: 'GET',
+                url: '{% url "like" %}',
+                data: {
+                    BlogID:{{ blog.id }}
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if(response['like'] == true){
+                        $('#hideShowElm').removeClass('d-block');
+                        $('#hideShowElm').addClass('d-none');
+                        $('#hideShowElmAjREAL').removeClass('d-block');
+                        $('#hideShowElmAjREAL').addClass('d-none');
+
+                        $('#hideShowElmAjLIKE').removeClass('d-none');
+                        $('#hideShowElmAjLIKE').addClass('d-block');
+                        $('.counterlike').text(response['count']);
+                        $('.ajaxLoadering').hide();
+                        $('.LikeOrDis').show();
+                    }
+                    if(response['like'] == false) {
+                        $('#hideShowElm').removeClass('d-block');
+                        $('#hideShowElm').addClass('d-none');
+                        $('#hideShowElmAjLIKE').removeClass('d-block');
+                        $('#hideShowElmAjLIKE').addClass('d-none');
+
+                        $('#hideShowElmAjREAL').removeClass('d-none');
+                        $('#hideShowElmAjREAL').addClass('d-block');
+                        $('.counterreal').text(response['count']);
+                        $('.ajaxLoadering').hide();
+                        $('.LikeOrDis').show();
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+

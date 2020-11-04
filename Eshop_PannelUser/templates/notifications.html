@@ -1,0 +1,70 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}اعلانات سایت{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <section id="body">
+        <div class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/info" class="aInFooter">پنل کاربری</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/notifications" class="aInFooter"> اعلانات سایت</a>
+                </b>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-md-3 shad">
+
+                    {# sideBar #}
+                    {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="shad p-3">
+
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b> اعلانات سایت</b>
+                        </div>
+                        <br>
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <p class="p text-muted">آیا شما میخواهید اعلانات سایت از طریق ایمیل <b>" {{ request.user.email }} "</b> برای شما ارسال شود؟</p>
+
+                            <div class="custom-control custom-radio ml-5 wow animate__animated animate__fadeIn" data-wow-delay="0.5s">
+                                <input type="radio" class="custom-control-input" id="customRadio" name="sendMail" value="yesSending" {% if activess == True %}checked{% endif %}>
+                                <label class="custom-control-label" for="customRadio"><b>بله</b> ارسال شود.</label>
+                            </div>
+
+                            <div class="custom-control custom-radio ml-5 mt-2 wow animate__animated animate__fadeIn" data-wow-delay="1s">
+                                <input type="radio" class="custom-control-input" id="customRadio2" name="sendMail" value="noSending" {% if activess == False %}checked{% endif %}>
+                                <label class="custom-control-label" for="customRadio2"><b>نه</b> ارسال نشود.</label>
+                            </div>
+
+                            <br>
+                            <br>
+                            <button type="submit" class="btn btn-sm login-btn float-right">ثبت تغییر</button>
+                            <br>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </section>
+
+{% endblock %}
+

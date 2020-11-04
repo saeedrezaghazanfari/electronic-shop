@@ -1,0 +1,11 @@
+{% load static %}
+
+{% for brand in brands %}
+
+    <div class="item p-4 ">
+        <a href="{{ brand.url }}" target="_blank">
+            <img src="{{ brand.image.url }}" alt="{{ brand.title }}" class="bg-light shad">
+        </a>
+    </div>
+
+{% endfor %}
