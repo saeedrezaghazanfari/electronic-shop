@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from .models import Product, Category, ProductGallery, ProductVeiw, Favorites, ProductBrand, ProductColor
+from .models import Product, Category, ProductGallery, ProductVeiw, Favorites, ProductBrand, ProductColor, Chart
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from Eshop_Order.forms import OrderForm
@@ -33,7 +33,9 @@ def Product_Details_Page(request, *args, **kwargs):
         'shortlink': request.path,
         'productColors': None,
         'orderForm':None,
-        'ex_fav': False
+        'ex_fav': False,
+        'times': None,
+        'prices': None
     }
     product_selected: Product = Product.objects.get_by_id(product_id=productID)
     context['product'] = product_selected
@@ -45,6 +47,13 @@ def Product_Details_Page(request, *args, **kwargs):
     # Order
     orderForm = OrderForm(request.POST or None, initial={'productId': productID})
     context['orderForm'] = orderForm
+
+    # Chart
+    chartEX = Chart.objects.filter(product_id=productID, price=product_selected.price).first()
+    if not chartEX:
+        Chart.objects.create(product_id=productID, price=product_selected.price)
+    context['prices'] = Chart.objects.filter(product_id=productID).values_list('price', flat=True).all()
+    context['times'] = Chart.objects.filter(product_id=productID).values_list('timeStamp', flat=True).all()
 
     # relation Products
     category_name = product_selected.categories.first()

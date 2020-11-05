@@ -148,3 +148,16 @@ class ProductColor(models.Model):
 
     def __str__(self):
         return f'{self.product} - {self.color}'
+
+class Chart(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='chartproduct', verbose_name='محصول')
+    price = models.PositiveIntegerField(default=0, verbose_name='قیمت')
+    timeStamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name='نمودار محصول'
+        verbose_name_plural='نمودار محصولات'
+
+    def __str__(self):
+        return f'{self.product} - {self.price} - {self.timeStamp}'
+
