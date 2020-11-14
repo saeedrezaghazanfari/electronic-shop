@@ -6,4 +6,4 @@ def About_Us_Page(request):
     context = {
         'siteSetting':siteSetting
     }
-    return render(request, 'About-Us.html', context)
+    return render(request, 'about-us.html', context)

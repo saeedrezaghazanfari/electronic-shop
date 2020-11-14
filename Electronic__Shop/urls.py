@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -31,6 +31,7 @@ urlpatterns = [
     path('Header-partial', Header_partial, name="Header_partial"),
     path('Footer-partial', Footer_partial, name="Footer_partial"),
     path('charts-partial', charts_partial, name="charts_partial"),
+    re_path(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),

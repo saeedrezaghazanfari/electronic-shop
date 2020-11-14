@@ -15,7 +15,7 @@ def Login_Page(request):
         messages.info(request, 'شما در حال حاضر دارای یک حساب کاربری میباشید.')
         return redirect('/')
 
-    loginForm = LoginForm(request.POST or None, initial={'email':request.session.get('email')})
+    loginForm = LoginForm(request.POST or None)
     context = {
         'loginForm': loginForm,
     }
@@ -24,14 +24,12 @@ def Login_Page(request):
         password = loginForm.cleaned_data.get('password')
 
         convert: User = User.objects.filter(email__iexact=email).first()
-        user = authenticate(request, username=convert.username, password=password)
-        # request.session['email'] = loginForm.cleaned_data.get('email')
-        # request.session['password'] = loginForm.cleaned_data.get('password')
-        if user:
-            login(request, user)
-            context['loginForm'] = LoginForm()
-            return redirect('/Auth/pre-home')
-
+        if convert:
+            user = authenticate(request, username=convert.username, password=password)
+            if user:
+                login(request, user)
+                context['loginForm'] = LoginForm()
+                return redirect('/Auth/pre-home')
         else:
             loginForm.add_error('email', 'اکانتی با این ایمیل وجود ندارد.')
 
@@ -77,14 +75,14 @@ def Register_Page(request):
         messages.info(request,'ساخت اکانت شما موفقیت بود ، برای ورود به سیستم اطلاعات خود را وارد کنید.')
         return redirect('/Auth/Login')
 
-    return render(request, 'Register_page.html', context)
+    return render(request, 'register_page.html', context)
 
 def pre_home_page(request):
     if not Send_Notifications_email_Model.objects.filter(user_id=request.user.id).first():
         Send_Notifications_email_Model.objects.create(user_id=request.user.id , activeSend=True)
 
     if not UltraProfile.objects.filter(user_id=request.user.id).first():
-        UltraProfile.objects.create(user_id=request.user.id, avator=UltraProfile.set_image_profile(), phone=0, webName='', bio='')
+        UltraProfile.objects.create(user_id=request.user.id, phone=0, webName='', bio='')
     messages.info(request, 'ورود شما به سیستم موفقیت بود !!')
     return redirect('/')
 

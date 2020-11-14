@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 class Blog_List(ListView):
-    template_name = 'BlogList.html'
+    template_name = 'bloglist.html'
     paginate_by = 6
     def get_queryset(self):
         return BlogModel.objects.get_active_Blog()
@@ -59,7 +59,7 @@ def Blog_Details(request, *args, **kwargs):
             CommentReply.objects.create(user_id=request.user.id, comment_id=idCmt, msg=msgReply)
             messages.info(request, 'پاسخ شما با موفقیت ارسال شد.')
 
-    allCmts = Comment.objects.filter(post_id=selected_blog.id).all().order_by('-id')
+    allCmts: Comment = Comment.objects.filter(post_id=selected_blog.id).all().order_by('-id')
 
     context = {
         'blog': selected_blog,
@@ -69,7 +69,7 @@ def Blog_Details(request, *args, **kwargs):
         'allCmts': allCmts,
         'form':form
     }
-    return render(request, 'BlogDetails.html', context)
+    return render(request, 'blogdetails.html', context)
 
 @login_required(login_url='/Auth/Login')
 def LikeUrl(request):

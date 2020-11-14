@@ -3,9 +3,11 @@ from ckeditor.fields import RichTextField
 from django.db.models import Q
 import os
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.utils.html import format_html
+from Extentions.utils import jalali_convertor
 
 class ProductManager(models.Manager):
-
     def get_by_id(self, product_id):
         return self.get_queryset().get(id=product_id)
     def get_active_products(self):
@@ -61,7 +63,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=100, verbose_name='برند' ,blank=True, null=True)
     image = models.ImageField(upload_to=upload_image_path, verbose_name='تصویر محصول')
     description = RichTextField(verbose_name='توضیحات')
-    timeStamp = models.DateTimeField(auto_now_add=True)
+    timeStamp = models.DateTimeField(default=timezone.now(), verbose_name='زمان ثبت')
     categories = models.ManyToManyField(Category, verbose_name='دسته بندی')
     active = models.BooleanField(default=False, verbose_name='نمایش / روح')
     views = models.PositiveIntegerField(default=0, verbose_name='تعداد بازدید')
@@ -69,6 +71,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'محصول'
         verbose_name_plural = 'محصولات'
+        ordering = ['-id']
 
     objects = ProductManager()
 
@@ -77,6 +80,14 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return f'/Product/Details/{self.id}/{self.title.replace(" ","-")}'
+
+    def jimage(self):
+        return format_html(f'<img src="{self.image.url}" style="width:100px; height: 60px;">')
+    jimage.short_description = 'تصویر محصول'
+
+    def jtimeStamp(self):
+        return jalali_convertor(self.timeStamp)
+    jtimeStamp.short_description = 'زمان ثبت'
 
 class Tag(models.Model):
     products = models.ManyToManyField(Product, verbose_name='محصولات')

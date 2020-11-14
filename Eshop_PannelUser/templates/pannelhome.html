@@ -40,9 +40,9 @@
                                 <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.9s"><i class="fa fa-envelope"></i> ایمیل: <b>{{ user.email }}</b></p>
                                 <br>
                                 <p class="pl-4 wow animate__animated animate__fadeInUp" data-wow-delay="1.2s">
-                                    {% if userProfile.avator %}
-                                        <a href="{{ userProfile.avator.url }}" class="btn login-btn btn-sm d-inline">مشاهده ی تصویر پروفایل</a>
-                                    {% endif %}
+                                {% if not userProfile.avator.url == '/media/img/eshop.png' %}
+                                     <a href="{{ userProfile.avator.url }}" class="btn login-btn btn-sm d-inline">مشاهده ی تصویر پروفایل</a>
+                                {% endif %}
                                 </p>
                             </div>
                             <div class="col-md-6">

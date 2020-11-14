@@ -23,7 +23,7 @@ def upload_image_path_ImageErrSpam(instance, filename):
 
 class UltraProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='مالک پروفایل')
-    avator = models.ImageField(upload_to=upload_image_path_profile, verbose_name='تصویر پروفایل')
+    avator = models.ImageField(upload_to=upload_image_path_profile, default='/img/eshop.png', verbose_name='تصویر پروفایل')
     phone = models.PositiveBigIntegerField(verbose_name='شماره تماس', blank=True, null=True, default=0)
     webName = models.CharField(max_length=100, verbose_name='آدرس وبسایت', blank=True, null=True)
     bio = models.TextField(verbose_name='بیوگرافی', blank=True, null=True)
@@ -34,29 +34,6 @@ class UltraProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-    def set_image_profile():
-        import random
-        a = '/avators/1.jpg'
-        b = '/avators/2.jpg'
-        c = '/avators/3.jpg'
-        d = '/avators/4.jpg'
-        e = '/avators/5.jpg'
-        f = '/avators/6.jpg'
-
-        randNum = random.randint(1,6)
-        if randNum == 1:
-            return a
-        elif randNum == 2:
-            return b
-        elif randNum == 3:
-            return c
-        elif randNum == 4:
-            return d
-        elif randNum == 5:
-            return e
-        elif randNum == 6:
-            return f
 
 class ReportSpam_Model(models.Model):
     username = models.CharField(max_length=100, verbose_name='نام کاربری')

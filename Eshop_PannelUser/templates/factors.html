@@ -53,7 +53,7 @@
                                         <td><b><a href="{{ order.product.get_absolute_url }}" class="aInFooter">{{ order.product.title }}</a></b></td>
                                         <td class="number">{{ order.count }}</td>
                                         <td><b class="number">{{ order.get_priceCount_total }}</b>تومان</td>
-                                        <td>{% if myorder.is_paid == True %}<img class="tikmultisize" src="{% static 'img/tik.PNG' %}" alt="true">{% else %}<img class="tikmulti" src="{% static 'img/multi.PNG' %}" alt="true">{% endif %}</td>
+                                        <td>{% if myorder.is_paid == True %}<img class="tikmultisize" src="{% static 'img/tik.PNG' %}" alt="true">{% else %}<img class="tikmultisize" src="{% static 'img/multi.PNG' %}" alt="true">{% endif %}</td>
                                         <td><button class="btn login-btn btn-sm" data-target="#modalfactor{{ order.id }}" data-toggle="modal">جزئیات</button></td>
                                     </tr>
                                 {% endfor %}

@@ -52,7 +52,7 @@ def Slider_partial_Page(requset):
 
 def Brands_partial_Page(request):
     brands = Brands.objects.filter(active=True).all()
-    return render(request, 'partial_views/Brands_partial.html', {'brands': brands})
+    return render(request, 'partial_views/brands_partial.html', {'brands': brands})
 
 def charts_partial(request):
     products = Product.objects.all().count()
@@ -70,14 +70,14 @@ def Footer_categories_partail(request):
     context = {
         'categories': category_name
     }
-    return render(request, 'partial_views/Footer_Category.html', context)
+    return render(request, 'partial_views/footer_category.html', context)
 
 def Footer_brands_partail(request):
     brands = ProductBrand.objects.values_list('productBrand', flat=True).distinct()[:8]
     context = {
         'brands': brands
     }
-    return render(request, 'partial_views/Footer_brands.html', context)
+    return render(request, 'partial_views/footer_brands.html', context)
 
 def Header_partial(request):
     notifications = Notification.objects.filter(active=True)
@@ -98,11 +98,11 @@ def Header_partial(request):
     else:
         context['offcode'] = None
 
-    return render(request, 'shared/_Header.html', context)
+    return render(request, 'shared/_header.html', context)
 
 def Footer_partial(request):
     siteSetting = SiteSetting.objects.first()
     context = {
         'siteSetting':siteSetting
     }
-    return render(request, 'shared/_Footer.html', context)
+    return render(request, 'shared/_footer.html', context)

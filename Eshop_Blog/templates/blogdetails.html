@@ -1,4 +1,5 @@
 {% extends 'shared/_MainLayout.html' %}
+{% load ratings %}
 {% block titlePage %}جزئیات پست {{ blog.title }}{% endblock %}
 {% load static %}
 {% block content %}
@@ -21,7 +22,7 @@
         <div class="border">
 
             <a href="" class="btn login-btn btn-sm number float-right mt-3 mr-3 disable wow animate__animated animate__fadeInDown " data-wow-delay="1s" >
-                {{ blog.timeStamp | time }} <i class="fa fa-calendar"></i>
+                {{ blog.timeStamp | timesince }} پیش <i class="fa fa-calendar"></i>
             </a>
             <a href="" class="btn login-btn btn-sm number float-right mt-3 mr-1 disable wow animate__animated animate__fadeInDown " data-wow-delay="1.5s" >
                 {{ view }} <i class="fa fa-eye"></i>
@@ -35,7 +36,7 @@
                         <h4 class="wow animate__animated animate__fadeInUp" data-wow-delay="1s"><b>{{ blog.title }}</b></h4>
                     </div>
                     <div class="p-1 text-blue font-small">
-                        <span class="wow animate__animated animate__fadeIn" data-wow-delay="2.4s"><b>{{ blog.timeStamp | timesince }} پیش</b></span>
+                        {% ratings blog %}
                     </div>
                     <div class="p-1 text-blue">
                         <h4 class="wow animate__animated animate__fadeInDown" data-wow-delay="1s"><b>{{ blog.writer }}</b></h4>
@@ -113,9 +114,11 @@
                 <b>لیست نظرات</b>
             </div>
 
-            {% for allCmt in allCmts %}
+            {% if allCmts %}
+
+                {% for allCmt in allCmts %}
                 <div class="border p-3 mt-5 bg-light ">
-{#                    <img src="" data-id-CMT="{{ allCmt.id }}" class="imgConvers imgCMT" alt="{{ allCmt.user.username }}">#}
+                    <img src="" class="imgConvers imgCMT" alt="{{ allCmt.user.username }}">
                     <h6 class="d-inline font-weight-bolder">
                         {{ allCmt.user.username }}
                         <a href="/Blog/List/comments/report/{{ allCmt.id }}/{{ blog.id }}" class="btn btn-danger btn-sm font-small ml-4">گزارش</a>
@@ -142,7 +145,7 @@
 
                 {% for a in allCmt.get_replies %}
                     <div class="border p-3 mt-5 ml-5 bg-lighter">
-{#                        <img src="" id="imgRPL" data-id-RPL="{{ a.id }}" class="imgConvers" alt="{{ a.user.username }}">#}
+                        <img src="" id="imgRPL" data-id-RPL="{{ a.id }}" class="imgConvers" alt="{{ a.user.username }}">
                         <h6 class="d-inline font-weight-bolder">
                             {{ a.user.username }}
                             <a class="btn login-btn text-white btn-sm font-small ml-4">پاسخ به {{ allCmt.user.username }}</a>
@@ -159,6 +162,10 @@
                     <small class="text-muted float-right"><i>{{ a.timeStamp | timesince }} پیش <i class="fa fa-clock"></i></i></small>
                 {% endfor %}
             {% endfor %}
+            {% else %}
+                <br>
+                <div class="alert alert-warning">دیدگاهی برای این پست ارسال نشده است.</div>
+            {% endif %}
         </div>
         <br>
     </section>

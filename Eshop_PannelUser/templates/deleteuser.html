@@ -1,0 +1,79 @@
+{% extends 'shared/_MainLayout.html' %}
+{% block titlePage %}حذف حساب کاربری{% endblock %}
+{% load render_partial %}
+{% load static %}
+{% block content %}
+
+    <section id="body">
+        <div class="container mt-5">
+
+            <div class="row bg-light p-3 text-blue border">
+                <b class="ml-5">
+                    مسیر شما: &nbsp;
+                    <a href="/" class="aInFooter">صفحه ی اصلی وبسایت</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/info" class="aInFooter">پنل کاربری</a>
+                    &nbsp;<i class="fa fa-chevron-left text-danger"></i>&nbsp;
+                    <a href="/user/admin/charts" class="aInFooter">نمودار ها</a>
+                </b>
+            </div>
+            <br>
+
+            <div class="row">
+
+                <div class="col-md-3 shad">
+
+                    {# sideBar #}
+                    {% render_partial 'Eshop_PannelUser.views.sideBar' %}
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="shad p-3">
+
+                        <div class="container bg-light p-1 text-blue text-center border leftRightBorder">
+                            <b>نمودار ها</b>
+                        </div>
+                        <br>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="custom-control custom-switch p">
+                                <input type="checkbox" name="switchdel" class="custom-control-input" value="del" id="switchdel">
+                                <label class="custom-control-label text-danger" for="switchdel">آیا از حذف حساب کاربری خود مطمئن هستید؟</label>
+                            </div>
+                            <br>
+                            <table class="table table-respponse border text-center">
+
+                                <tbody>
+                                    <tr>
+                                        <th>نام کاربری</th>
+                                        <th>نام و نام خانوادگی</th>
+                                        <th>ایمیل</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{ request.user.username }}</td>
+                                        <td>{% if not request.user.get_fullname %}-{% else %}{{ request.user.get_fullname }}{% endif %}</td>
+                                        <td>{{ request.user.email }}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <br>
+                            <button type="submit" class="btn btn-sm login-btn float-right">حذف حساب کاربری</button>
+                        </form>
+
+                        <br>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </section>
+
+{% endblock %}

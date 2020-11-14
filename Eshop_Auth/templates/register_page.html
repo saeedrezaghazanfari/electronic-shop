@@ -91,7 +91,14 @@
                                 <label for="{{ register.re_password.id_for_label }}">{{ register.re_password.label | safe }}</label>
                                 {{ register.re_password }}
                             </div>
-                            <input type="submit" value="ثبتنام" class="mt-2 btn login-btn btn-block btn-sm wow animate__animated animate__fadeInUp " data-wow-delay="2s" style="visibility: visible; animation-delay: 2s; animation-name: fadeInUp;">
+                            <br>
+                            <!-- this is recapcha google -->
+                            <script src='https://www.google.com/recaptcha/api.js'></script>
+                            <!-- this is sitekey -->
+                            <div class="g-recaptcha" data-sitekey="6LfA3uIZAAAAAEqzUMZ3BGEAq-d9EikKZ-iJFTAB"></div>
+
+                            <br>
+                            <input type="submit" value="ثبتنام" class="btn login-btn btn-block btn-sm wow animate__animated animate__fadeInUp " data-wow-delay="2s" style="visibility: visible; animation-delay: 2s; animation-name: fadeInUp;">
                         </form>
                     </div>
 

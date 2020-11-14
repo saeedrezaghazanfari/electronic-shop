@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    {% include 'shared/_Header_Ref.html' %}
+    {% include 'shared/_header_ref.html' %}
     <title>{% block titlePage %}فروشگاه لوازم خانگی{% endblock %}</title>
 
 </head>
@@ -18,7 +18,7 @@
     {% render_partial 'Header_partial' %}
     {% block content %}{% endblock %}
     {% render_partial 'Footer_partial' %}
-    {% include 'shared/_Footer_Ref.html' %}
+    {% include 'shared/_footer_ref.html' %}
 
    <div class="messagesClass">
         {% if messages %}

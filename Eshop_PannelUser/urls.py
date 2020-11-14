@@ -15,6 +15,7 @@ from Eshop_PannelUser.views import (
     returnShowProd,
     ProfileImagesideBar,
     charts_Page,
+    deleteUser
 )
 
 urlpatterns = [
@@ -30,7 +31,7 @@ urlpatterns = [
     path('admin/users', adminOption_users),
     path('admin/users/<int:userID>', adminOption_users_Action),
     path('admin/send-mails', adminSendMails),
+    path('delete', deleteUser),
     path('sideBar', sideBar),
     path('Profile-Image-sideBar', ProfileImagesideBar, name='ProfileImagesideBar'),
-
 ]

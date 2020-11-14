@@ -40,4 +40,4 @@ def ContactUs_Page(request):
     siteSetting = SiteSetting.objects.first()
     context['siteSetting'] = siteSetting
 
-    return render(request, 'ContactUs.html', context)
+    return render(request, 'contactus.html', context)

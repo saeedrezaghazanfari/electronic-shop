@@ -1,0 +1,14 @@
+{
+  "platform": "django",
+  "app": "ghazanfari",
+  "disks": [
+    {
+      "name": "disc1",
+      "mountTo": "static_cdn/media_root"
+    },
+    {
+      "name": "disc2",
+      "mountTo": "static_cdn/static_root"
+    }
+  ]
+}

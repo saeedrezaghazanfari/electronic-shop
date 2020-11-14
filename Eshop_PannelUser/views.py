@@ -20,7 +20,7 @@ def pannel_Page(request):
     favs = Favorites.objects.filter(user_id=request.user.id).all()
 
     context = {'user':user,'userProfile':userProfile, 'favs':favs}
-    return render(request, 'pannelHome.html', context)
+    return render(request, 'pannelhome.html', context)
 
 @login_required(login_url='/Auth/Login')
 def returnShowProd(request, *args, **kwargs):
@@ -80,7 +80,7 @@ def edit_Page(request):
         messages.info(request, 'پروفایل شما با موفقیت ویرایش شد.')
         return redirect('/user/info')
 
-    return render(request, 'editPannel.html', context)
+    return render(request, 'editpannel.html', context)
 
 @login_required(login_url='/Auth/Login')
 def sideBar(request):
@@ -221,7 +221,7 @@ def adminSendMails(request):
         'emailCntent':emailContent,
         'ex':ex
     }
-    return render(request, 'adminSendMails.html', context)
+    return render(request, 'adminsendmails.html', context)
 
 @login_required(login_url='/Auth/Login')
 def adminOption_users(request):
@@ -246,7 +246,7 @@ def adminOption_users(request):
         'activeUsersID':activeUsersID,
         'activeUsersNAMES':activeUsersNAMES
     }
-    return render(request, 'adminUsers.html', context)
+    return render(request, 'adminusers.html', context)
 
 @login_required(login_url='/Auth/Login')
 def adminOption_users_Action(request, *args, **kwargs):
@@ -290,3 +290,16 @@ def charts_Page(request):
     if not request.user.is_superuser:
         return redirect('/')
     return render(request, 'charts.html', {})
+
+@login_required(login_url='/Auth/Login')
+def deleteUser(request):
+    thisUserID = request.user.id
+    if request.POST:
+        if request.POST.get('switchdel') == 'del':
+            User.objects.get(id=thisUserID).delete()
+            messages.info(request, 'حساب کاربری شما با موفقیت حذف شد. برای ایجاد حساب کاربری اطلاعات خود را وارد کنید.')
+            return redirect('/Auth/Register')
+        else:
+            messages.info(request, 'حذف حساب کاربری شما انجام نشد.')
+
+    return render(request, 'deleteuser.html', {})
