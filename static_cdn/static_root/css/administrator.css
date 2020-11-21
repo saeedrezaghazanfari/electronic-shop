@@ -1,0 +1,29 @@
+@font-face{
+    font-family: 'sahel';
+    src: url('../font/Sahel.woff'), url('../font/Sahel.ttf');
+}
+body, html, *{
+    font-family: sahel !important;
+}
+#header{
+    background-color: #0f3653 !important;
+}
+html::-webkit-scrollbar{
+    background-color: rgb(98, 96, 96);
+    width: 10px;
+}
+html::-webkit-scrollbar-thumb{
+    border-radius: 15px;
+    background-color: rgb(41, 41, 42);
+}
+html::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(28, 28, 29);
+}
+nav.sticky::-webkit-scrollbar{
+    background-color: rgb(175,175,175);
+    width: 10px;
+}
+nav.sticky::-webkit-scrollbar-thumb{
+    border-radius: 15px;
+    background-color: rgb(85,85,85);
+}

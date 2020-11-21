@@ -1,7 +1,7 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views.generic import ListView
-from .models import Product, Category, ProductGallery, ProductVeiw, Favorites, ProductBrand, ProductColor, Chart
+from .models import Product, Category, ProductVeiw, Favorites, ProductBrand, ProductColor, Chart
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from Eshop_Order.forms import OrderForm

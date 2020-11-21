@@ -14,7 +14,6 @@ RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = []
 
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,6 +32,7 @@ INSTALLED_APPS = [
     'zeep',
     'star_ratings',
     'captcha',
+    'admin_honeypot',
 
     # Apps
     'Extentions',
@@ -69,7 +69,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'online_users.middleware.OnlineNowMiddleware',  # online_users
+    # online_users
+    'online_users.middleware.OnlineNowMiddleware',
+    # App MiddleWare
+
 ]
 
 ROOT_URLCONF = 'Electronic__Shop.urls'
@@ -95,8 +98,6 @@ WSGI_APPLICATION = 'Electronic__Shop.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -156,3 +157,13 @@ EMAIL_HOST_PASSWORD = '1190274442saeed'
 # star ratinsgs
 STAR_RATINGS_ANONYMOUS = True
 STAR_RATINGS_STAR_HEIGHT = 20
+
+# Abstract User
+# AUTH_USER_MODEL = 'Eshop_Auth.User'
+
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+}

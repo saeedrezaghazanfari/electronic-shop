@@ -144,7 +144,6 @@ class Persian:
         else:
             raise Exception("Invalid Input")
 
-        # Check validity of date. TODO better check (leap years)
         if year < 1 or month < 1 or month > 12 or day < 1 or day > 31 or (month > 6 and day == 31):
             raise Exception("Incorrect Date")
 

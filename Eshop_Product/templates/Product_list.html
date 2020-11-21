@@ -93,7 +93,7 @@
                             <div class="card my-card p-1">
                                 <img src="{{ obj.image.url }}" class="img-responsive img-top prolistimage" alt="{{ obj.title }}">
                                 <div class="card-body">
-                                    <h5 class="p-1 text-center bg-light text-blue leftRightBorder"><b>{{ obj.title }}</b></h5>
+                                    <h5 class="p-1 text-center bg-light text-blue"><b>{{ obj.title }}</b> {% if obj.is_off %}<i class="badge badge-danger font-small">تخفیف</i>{% endif %}</h5>
                                     <span class="p-1 d-inline float-left bg-light"><span class="number">{{ obj.price }}</span> تومان</span>
                                     <b class="p-1 d-inline float-right bg-light">برند: {{ obj.brand }}</b>
                                     <br>

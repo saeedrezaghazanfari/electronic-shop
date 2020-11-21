@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from Eshop_ContactUs.models import ContactModel, OpinionModel
 
 class ContactAdmin(admin.ModelAdmin):

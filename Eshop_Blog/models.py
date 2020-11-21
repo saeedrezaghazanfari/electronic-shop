@@ -1,9 +1,7 @@
-from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
 from ckeditor.fields import RichTextField
-from zeep.wsse import username
-
+from Extentions.utils import jalali_convertor
 
 class BlogManager(models.Manager):
     def get_active_Blog(self):
@@ -39,8 +37,15 @@ class BlogModel(models.Model):
     def __str__(self):
         return self.title
 
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        super().delete(*args, **kwargs)
+
     def get_absolute_url(self):
         return f'/Blog/Details/{self.id}/{self.title.replace(" ","-")}'
+
+    def jtimeStamp(self):
+        return jalali_convertor(self.timeStamp)
 
     def has_next(self):
         Blog_id = self.id

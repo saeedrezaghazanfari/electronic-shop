@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-
 from .forms import msgForm
 from .models import BlogModel, LikePost, ViewPost, Comment, CommentReply, Report_All_Comment
 from django.contrib.auth.decorators import login_required
@@ -67,7 +66,7 @@ def Blog_Details(request, *args, **kwargs):
         'bol': bol,
         'view': views,
         'allCmts': allCmts,
-        'form':form
+        'form':form,
     }
     return render(request, 'blogdetails.html', context)
 

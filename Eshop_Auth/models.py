@@ -1,8 +1,18 @@
-from email.policy import default
 
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import User
 import os
+
+# class User(AbstractUser):
+    # ip = ....
+    # avator = models.ImageField(upload_to=upload_image_path_profile, default='/img/eshop.png', verbose_name='تصویر پروفایل')
+    # phone = models.PositiveBigIntegerField(verbose_name='شماره تماس', blank=True, null=True, default=0)
+    # webName = models.CharField(max_length=100, verbose_name='آدرس وبسایت', blank=True, null=True)
+    # bio = models.TextField(verbose_name='بیوگرافی', blank=True, null=True)
+    # def delete(self, *args, **kwargs):
+    #     self.avatar.delete()
+    #     super().delete(*args, **kwargs)
 
 def get_filename_ext_rand(filepath):
     from random import randint
@@ -32,6 +42,10 @@ class UltraProfile(models.Model):
         verbose_name = 'پروفایل'
         verbose_name_plural = 'پروفایل ها'
 
+    def delete(self, *args, **kwargs):
+        self.avator.delete()
+        super().delete(*args, **kwargs)
+
     def __str__(self):
         return self.user.username
 
@@ -45,6 +59,10 @@ class ReportSpam_Model(models.Model):
     class Meta:
         verbose_name = 'گزارش خطا'
         verbose_name_plural = 'گزارش خطاها'
+
+    def delete(self, *args, **kwargs):
+        self.imageErr.delete()
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return f'{self.username} - {self.subject}'

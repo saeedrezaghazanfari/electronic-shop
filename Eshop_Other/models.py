@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+
 from django.db import models
 from ckeditor.fields import RichTextField
 
@@ -33,6 +34,10 @@ class MainSlider(models.Model):
     def __str__(self):
         return self.message
 
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        super().delete(*args, **kwargs)
+
 class Brands(models.Model):
     title = models.CharField(max_length=100, verbose_name='نام برند')
     image = models.ImageField(upload_to=upload_image_path_brand, verbose_name='برند')
@@ -42,6 +47,10 @@ class Brands(models.Model):
     class Meta:
         verbose_name = 'برند'
         verbose_name_plural = 'برند ها'
+
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.title

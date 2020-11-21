@@ -34,7 +34,8 @@ urlpatterns = [
     re_path(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('secret/administrator/pages/admin/', admin.site.urls , name="adminpage"),
 ]
 
 if settings.DEBUG:

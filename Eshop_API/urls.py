@@ -1,7 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+from . import views
 
-from .views import get_active_products
+router = routers.DefaultRouter()
+router.register('', views.ProductModelSerializer)
+
 
 urlpatterns = [
-    path('get-active-products', get_active_products.as_view()),
+    path('v1/', include(router.urls)),
 ]

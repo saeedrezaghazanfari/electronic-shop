@@ -3,7 +3,7 @@ from Eshop_Blog.models import BlogModel, LikePost, ViewPost, Comment, CommentRep
 
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'writer', 'timeStamp']
+    list_display = ['__str__', 'writer', 'jtimeStamp']
 
 admin.site.register(BlogModel, BlogAdmin)
 admin.site.register(LikePost)

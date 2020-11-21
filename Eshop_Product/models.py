@@ -67,6 +67,7 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category, verbose_name='دسته بندی')
     active = models.BooleanField(default=False, verbose_name='نمایش / روح')
     views = models.PositiveIntegerField(default=0, verbose_name='تعداد بازدید')
+    is_off = models.BooleanField(default=False, verbose_name='تخفیف دارد:')
 
     class Meta:
         verbose_name = 'محصول'
@@ -77,6 +78,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        super().delete(*args, **kwargs)
 
     def get_absolute_url(self):
         return f'/Product/Details/{self.id}/{self.title.replace(" ","-")}'
@@ -113,6 +118,10 @@ class ProductGallery(models.Model):
 
     def __str__(self):
         return self.title
+
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+        super().delete(*args, **kwargs)
 
 class ProductVeiw(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='کاربر', blank=True, null=True)

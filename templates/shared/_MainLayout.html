@@ -11,7 +11,9 @@
     <div class="row bg-white animate__animated animate__fadeIn " id="loader">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <img src="{% static 'img/preload.gif' %}" class="img img-fluid" alt="loading...">
+            <div id="loader" class="mx-auto" style="border: 10px solid gray; border-left: 10px solid white; border-radius: 50%; height: 80px; margin:0;  width: 80px; animation: loader 2s infinite linear;"></div>
+            <br>
+            <span>... در حال بارگذاری</span>
         </div>
         <div class="col-md-4"></div>
     </div>
@@ -22,16 +24,16 @@
 
    <div class="messagesClass">
         {% if messages %}
-            {% for message in messages %}
-                <div class="messagesClass font-small">
+            <div class="messagesClass font-small">
+                {% for message in messages %}
                     <div class="alert bg-linear-blue text-white alert-dismissible fade show removeAlertMsg" role="alert">
                         {{ message | safe }}
                         <button type="button" class="close btn" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         {% endif %}
     </div>
 
@@ -51,6 +53,7 @@ document.onreadystatechange = function() {
         document.querySelector( "body").style.backgroundColor= "initial";
     }
 };
+{# owl carousel #}
 var owl = $('.owl-carousel');
 owl.owlCarousel({
     items:4,

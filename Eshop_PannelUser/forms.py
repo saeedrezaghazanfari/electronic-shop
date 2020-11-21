@@ -1,7 +1,6 @@
 from django import forms
 from django.core import validators
 
-
 class EditForm(forms.Form):
     firstname = forms.CharField(label='<b class="text-muted">نام</b>', widget=forms.TextInput(attrs={'class':'form-control form-control-sm', 'placeholder':'نام خود را وارد کنید:'}),required=False)
     lastname = forms.CharField(label='<b class="text-muted">نام خانوادگی</b>', widget=forms.TextInput(attrs={'class':'form-control form-control-sm', 'placeholder':'نام خانوادگی خود را وارد کنید:'}), required=False)

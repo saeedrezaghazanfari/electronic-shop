@@ -35,3 +35,7 @@ class SiteSetting(models.Model):
 
     def __str__(self):
         return self.Email
+
+    def delete(self, *args, **kwargs):
+        self.Logo.delete()
+        super().delete(*args, **kwargs)

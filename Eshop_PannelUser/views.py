@@ -1,14 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from .forms import EditForm, ChangePw
+from .forms import EditForm
 from Eshop_Auth.models import UltraProfile
 from django.contrib import messages
 from Eshop_Other.models import Send_Notifications_email_Model, Emails
 from Eshop_Product.models import Favorites, Product
-from Eshop_Order.models import Order, OrderDetails
+from Eshop_Order.models import Order
 from django.conf import settings
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage
 
 @login_required(login_url='/Auth/Login')
 def pannel_Page(request):
